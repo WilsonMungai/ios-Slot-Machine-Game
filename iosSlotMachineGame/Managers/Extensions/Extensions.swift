@@ -14,7 +14,7 @@ extension Text {
             .font(.system(size: 10, weight: .bold, design: .rounded))
     }
     
-    // MARK: playerScore extension
+    // MARK: - playerScore extension
     func playerScore() -> Text {
         self .foregroundColor(Color("gold"))
             .fontWeight(.heavy)

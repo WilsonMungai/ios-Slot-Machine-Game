@@ -18,7 +18,7 @@ struct ReelView: View {
 struct ReelView_Previews: PreviewProvider {
     static var previews: some View {
         ReelView()
-            .previewLayout(.fixed(width: 200, height: 200))
+            .previewLayout(.fixed(width: 300, height: 300))
 
     }
 }

@@ -109,6 +109,7 @@
 		C8CA1070297CD05200F2DA82 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C8CA107B297CDA6E00F2DA82 /* Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -117,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				C8CA1079297CD51900F2DA82 /* Modifiers.swift */,
-				C8CA107B297CDA6E00F2DA82 /* Extensions.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";

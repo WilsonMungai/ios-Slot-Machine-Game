@@ -22,10 +22,11 @@ struct ContentView: View {
             VStack(alignment: .center, spacing: 5) {
                 // MARK: -Header
                 gameLogo()
+                
                 Spacer()
                 
                 HStack {
-                    // MARK: - Score
+                    // MARK: - Score Label
                     HStack {
                         Text("Your\nCoins".uppercased())
                             .playerScoreLabel()
@@ -57,19 +58,19 @@ struct ContentView: View {
                         ReelView()
                         Image("bell")
                             .resizable()
-                              .modifier(ReelImageModifier())
+                              .modifier(ImageModifier())
                         
                     }
                     
-                    HStack(alignment: .center, spacing: 0) {
+                    HStack() {
                         // MARK: - Reel 2
                         ZStack {
                             ReelView()
                             Image("cherry")
                                 .resizable()
-                                .modifier(ReelImageModifier())
+                                .modifier(ImageModifier())
                         }
-                        Spacer()
+//                        Spacer()
                         
                         // MARK: - Reel 3
                         ZStack {
@@ -77,27 +78,45 @@ struct ContentView: View {
                             Image("grape")
                                 .resizable()
                                 .scaledToFit()
-                                .modifier(ReelImageModifier())
+                                .modifier(ImageModifier())
                         }
                      
                     }
                     .frame(maxWidth: 500)
                     
                     // MARK: - Spinner Button
-                    ZStack {
+                    HStack {
                         Button(action: {
-                            print("Spin the reel")
+                            print("Spiner button pressed")
                         }){
-                            Image("spin")
+                            Image("spinner")
                                 .renderingMode(.original)
                                 .resizable()
-                                .modifier(ReelImageModifier())
+                                .modifier(SpinnerModifier())
+                        }
+                    }
+                    
+                    Spacer ()
+                    
+                    // MARK: - Bet Amounts
+                    // 1 dollar bet amount
+                    HStack {
+                        ZStack {
+                            Button(action: {
+                                print("$1 button pressed")
+                            }){
+                                Text("$1")
+                                Image("coin")
+                                    .resizable()
+                                    .renderingMode(.original)
+                                    .modifier(BetAmountModifier())
+                            }
                         }
                     }
                 }
              
             }
-            
+
         }
     }
     

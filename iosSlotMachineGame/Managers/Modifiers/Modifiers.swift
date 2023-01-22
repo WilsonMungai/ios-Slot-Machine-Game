@@ -42,3 +42,36 @@ struct ReelImageModifier: ViewModifier {
             .modifier(Shadow())
     }
 }
+
+// MARK: - Image Modifier
+struct ImageModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .scaledToFit()
+            .frame(minWidth: 90, idealWidth: 120, maxWidth: 140, minHeight: 85,
+                   idealHeight: 105, maxHeight: 120, alignment: .center)
+            .modifier(Shadow())
+    }
+}
+
+// MARK: - Spinner Modifier
+struct SpinnerModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .scaledToFit()
+            .frame(minWidth: 100, idealWidth: 140, maxWidth: 160, minHeight: 105,
+                   idealHeight: 125, maxHeight: 140, alignment: .center)
+            .modifier(Shadow())
+    }
+}
+
+// MARK: - Spinner Modifier
+struct BetAmountModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .scaledToFit()
+            .frame(minWidth: 50, idealWidth: 70, maxWidth: 80, minHeight: 50,
+                   idealHeight: 60, maxHeight: 70, alignment: .center)
+            .modifier(Shadow())
+    }
+}
