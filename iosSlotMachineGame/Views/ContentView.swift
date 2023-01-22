@@ -18,7 +18,6 @@ struct ContentView: View {
             // Extend gradient outside the safe area
             .edgesIgnoringSafeArea(.all)
             
-           
             VStack(alignment: .center, spacing: 5) {
                 // MARK: -Header
                 gameLogo()
@@ -139,7 +138,27 @@ struct ContentView: View {
 //                    .scaledToFill()
                 }
             }
-
+            
+            .overlay(
+                Button(action:{
+                    print("Reset game button pressed")
+                }){
+                    Image(systemName: "arrow.counterclockwise")
+                }
+                    .modifier(ResetbuttonModifier()),
+                    alignment: .topLeading
+            )
+//            .padding(.leading)
+            .overlay(
+                Button(action:{
+                    print("Leave game button pressed")
+                }){
+                    Image(systemName: "xmark.circle")
+                }
+                    .modifier(ResetbuttonModifier()),
+                    alignment: .topTrailing
+            )
+//            .padding(.trailing)
         }
     }
     
