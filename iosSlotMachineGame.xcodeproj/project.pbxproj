@@ -12,6 +12,10 @@
 		C8CA1064297CCD4300F2DA82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8CA1063297CCD4300F2DA82 /* Assets.xcassets */; };
 		C8CA1067297CCD4300F2DA82 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8CA1066297CCD4300F2DA82 /* Preview Assets.xcassets */; };
 		C8CA1076297CD13900F2DA82 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = C8CA1075297CD13900F2DA82 /* sounds */; };
+		C8CA1078297CD41200F2DA82 /* gameLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CA1077297CD41200F2DA82 /* gameLogo.swift */; };
+		C8CA107A297CD51900F2DA82 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CA1079297CD51900F2DA82 /* Modifiers.swift */; };
+		C8CA107C297CDA6E00F2DA82 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CA107B297CDA6E00F2DA82 /* Extensions.swift */; };
+		C8CA107E297CE5FF00F2DA82 /* ReelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CA107D297CE5FF00F2DA82 /* ReelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +25,10 @@
 		C8CA1063297CCD4300F2DA82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C8CA1066297CCD4300F2DA82 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C8CA1075297CD13900F2DA82 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = ../../../../projectAssets/sounds; sourceTree = "<group>"; };
+		C8CA1077297CD41200F2DA82 /* gameLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gameLogo.swift; sourceTree = "<group>"; };
+		C8CA1079297CD51900F2DA82 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
+		C8CA107B297CDA6E00F2DA82 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		C8CA107D297CE5FF00F2DA82 /* ReelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +83,8 @@
 			isa = PBXGroup;
 			children = (
 				C8CA1061297CCD4100F2DA82 /* ContentView.swift */,
+				C8CA1077297CD41200F2DA82 /* gameLogo.swift */,
+				C8CA107D297CE5FF00F2DA82 /* ReelView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -106,6 +116,8 @@
 		C8CA1071297CD06600F2DA82 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				C8CA1079297CD51900F2DA82 /* Modifiers.swift */,
+				C8CA107B297CDA6E00F2DA82 /* Extensions.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -181,6 +193,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8CA107E297CE5FF00F2DA82 /* ReelView.swift in Sources */,
+				C8CA107C297CDA6E00F2DA82 /* Extensions.swift in Sources */,
+				C8CA107A297CD51900F2DA82 /* Modifiers.swift in Sources */,
+				C8CA1078297CD41200F2DA82 /* gameLogo.swift in Sources */,
 				C8CA1062297CCD4100F2DA82 /* ContentView.swift in Sources */,
 				C8CA1060297CCD4100F2DA82 /* iosSlotMachineGameApp.swift in Sources */,
 			);
