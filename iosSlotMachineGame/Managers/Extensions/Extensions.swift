@@ -14,9 +14,17 @@ extension Text {
             .font(.system(size: 10, weight: .bold, design: .rounded))
     }
     
-    // MARK: - playerScore extension
+    // MARK: - playerScore text extension
     func playerScore() -> Text {
         self .foregroundColor(Color("gold"))
+            .fontWeight(.heavy)
+            .font(.system(.title, design: .rounded))
+    }
+    
+    // MARK: - bet amount text extension
+    func betAmountLabel() -> Text {
+        self .foregroundColor(Color("black"))
+            .font(.system(size: 30, weight: .bold, design: .rounded))
             .fontWeight(.heavy)
             .font(.system(.title, design: .rounded))
     }

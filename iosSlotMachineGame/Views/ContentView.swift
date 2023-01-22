@@ -18,13 +18,12 @@ struct ContentView: View {
             // Extend gradient outside the safe area
             .edgesIgnoringSafeArea(.all)
             
-            // MARK: - Icons
+           
             VStack(alignment: .center, spacing: 5) {
                 // MARK: -Header
                 gameLogo()
                 
-                Spacer()
-                
+                // MARK: - Game icons
                 HStack {
                     // MARK: - Score Label
                     HStack {
@@ -32,11 +31,10 @@ struct ContentView: View {
                             .playerScoreLabel()
                         Text("1000")
                             .playerScore()
-                            .modifier(Shadow())
+                            .modifier(BetAmountShadow())
                         
                     }
-                        .modifier(playerScoreContainerModifier())
-                    
+                    .padding(.leading)
                     Spacer()
                     
                     // MARK: - Jackpot Label
@@ -45,21 +43,20 @@ struct ContentView: View {
                             .playerScoreLabel()
                         Text("1000")
                             .playerScore()
-                            .modifier(Shadow())
+                            .modifier(BetAmountShadow())
                         
                     }
-                        .modifier(playerScoreContainerModifier())
+                    .padding(.trailing)
                 }
                 
                 // MARK: - Slot Machine
-                VStack(alignment: .center, spacing: 0) {
+                VStack() {
                     // MARK: - Reel 1
                     ZStack {
                         ReelView()
                         Image("bell")
                             .resizable()
-                              .modifier(ImageModifier())
-                        
+                            .modifier(ImageModifier())
                     }
                     
                     HStack() {
@@ -70,7 +67,7 @@ struct ContentView: View {
                                 .resizable()
                                 .modifier(ImageModifier())
                         }
-//                        Spacer()
+                        //                        Spacer()
                         
                         // MARK: - Reel 3
                         ZStack {
@@ -80,7 +77,7 @@ struct ContentView: View {
                                 .scaledToFit()
                                 .modifier(ImageModifier())
                         }
-                     
+                        
                     }
                     .frame(maxWidth: 500)
                     
@@ -101,20 +98,46 @@ struct ContentView: View {
                     // MARK: - Bet Amounts
                     // 1 dollar bet amount
                     HStack {
-                        ZStack {
+                        HStack {
                             Button(action: {
                                 print("$1 button pressed")
                             }){
-                                Text("$1")
-                                Image("coin")
-                                    .resizable()
-                                    .renderingMode(.original)
-                                    .modifier(BetAmountModifier())
+                                Text("1")
+                                    .betAmountLabel()
+                                    .modifier(BetAmountShadow())
+                                BetCoinView()
                             }
                         }
+                        .padding(.leading)
+                        
+                        HStack {
+                            Button(action: {
+                                print("$10 button pressed")
+                            }){
+                                Text("10")
+                                    .betAmountLabel()
+                                    .modifier(BetAmountShadow())
+                                BetCoinView()
+                            }
+                        }
+                        .padding(.leading)
+                        
+                        HStack {
+                            Button(action: {
+                                print("$100 button pressed")
+                            }){
+                                Text("100")
+                                    .betAmountLabel()
+                                    .modifier(BetAmountShadow())
+                                BetCoinView()
+                            }
+                        }
+                        .padding(.leading)
                     }
+                    .padding()
+                    
+//                    .scaledToFill()
                 }
-             
             }
 
         }

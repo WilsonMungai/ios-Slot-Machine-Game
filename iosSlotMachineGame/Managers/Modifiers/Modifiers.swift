@@ -27,7 +27,7 @@ struct playerScoreContainerModifier: ViewModifier {
     func body(content: Content) -> some View {
         content .background(Capsule() .foregroundColor(Color("transparent")))
             .padding(.vertical, 4)
-            .padding(.horizontal)
+            .padding(.horizontal, 16)
             .frame(minWidth: 128)
     }
 }
@@ -73,5 +73,21 @@ struct BetAmountModifier: ViewModifier {
             .frame(minWidth: 50, idealWidth: 70, maxWidth: 80, minHeight: 50,
                    idealHeight: 60, maxHeight: 70, alignment: .center)
             .modifier(Shadow())
+    }
+}
+
+// MARK: - Shadow modifier
+struct BetAmountShadow: ViewModifier {
+    func body(content: Content) -> some View {
+        content .shadow(color: Color("transparent"), radius: 0, x: 0, y: 3)
+    }
+}
+
+// MARK: - Reset button modifier
+struct ResetbuttonModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.title)
+        .accentColor(.white)
     }
 }
