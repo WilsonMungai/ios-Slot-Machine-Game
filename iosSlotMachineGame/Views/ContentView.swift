@@ -27,13 +27,18 @@ struct ContentView: View {
     // Array of reel images
     @State private var reelImage: Array = [0,1,2]
     //  Number of coins player has
-    @State private var playerCoins: Int = 100
+    @State private var playerCoins: Int = 1000
     // Payer highscore
     @State private var playerHighScore: Int = 0
     // Player's bet amout
     @State private var betAmount: Int = 1
+    
+    // Get the selected bet amount
+    @State private var selecteBetAmout1: Bool = false
+    @State private var selecteBetAmout10: Bool = false
+    @State private var selecteBetAmout100: Bool = false
 
-    // MARK: - Functions
+    // MARK: - Methods
     // Spin reels and get random images according to index
     func spinReels() {
         reelImage[0] = Int.random(in: 0...images.count - 1)
@@ -43,6 +48,51 @@ struct ContentView: View {
         print(reelImage)
     }
     
+    // 1 bet amount
+    func betAmout1() {
+        betAmount = 1
+        selecteBetAmout1 = true
+        selecteBetAmout10 = false
+        selecteBetAmout100 = false
+    }
+    
+    // 10 bet amount
+    func betAmout10() {
+        betAmount = 10
+        selecteBetAmout10 = true
+        selecteBetAmout1 = false
+        selecteBetAmout100 = false
+    }
+    
+    // 100 bet amount
+    func betAmout100() {
+        betAmount = 100
+        selecteBetAmout100 = true
+        selecteBetAmout1 = false
+        selecteBetAmout10 = false
+    }
+    
+    // check player winnings
+    func playerWinning() {
+        
+    }
+    
+    // player win
+    func wonBet() {
+        // Calculate what player has won by multiplying the bet amount
+        playerCoins += betAmount
+    }
+    
+    // player high score
+    func highScore() {
+        
+    }
+    
+    // reset the game
+    func resetGame() {
+        playerCoins = 1000
+        playerHighScore = 0
+    }
     
     // MARK: - Body
     var body: some View {
@@ -63,7 +113,7 @@ struct ContentView: View {
                     HStack {
                         Text("Your\nCoins".uppercased())
                             .playerScoreLabel()
-                        Text("1000")
+                        Text("\(playerCoins)")
                             .playerScore()
                             .modifier(BetAmountShadow())
                         
@@ -73,12 +123,11 @@ struct ContentView: View {
                     
                     // MARK: - Jackpot Label
                     HStack {
-                        Text("Current\nJackpot".uppercased())
-                            .playerScoreLabel()
-                        Text("1000")
+                        Text("\(playerHighScore)")
                             .playerScore()
                             .modifier(BetAmountShadow())
-                        
+                        Text("Current\nJackpot".uppercased())
+                            .playerScoreLabel()
                     }
                     .padding(.trailing)
                 }
@@ -103,8 +152,6 @@ struct ContentView: View {
                                 .resizable()
                                 .modifier(ImageModifier())
                         }
-                        //                        Spacer()
-                        
                         // MARK: - Reel 3
                         ZStack {
                             ReelView()
@@ -120,7 +167,13 @@ struct ContentView: View {
                     // MARK: - Spinner Button
                     HStack {
                         Button(action: {
+                            // Spin the reels
                             spinReels()
+                            
+                            // Update when player wins
+                            
+                            // Game is over
+                            
                             print("Spiner button pressed")
                         }){
                             Image("spinner")
@@ -139,39 +192,51 @@ struct ContentView: View {
                     HStack {
                         HStack {
                             Button(action: {
+                                betAmout1()
                                 print("$1 button pressed")
                             }){
                                 Text("1")
                                     .betAmountLabel()
                                     .modifier(BetAmountShadow())
                                     .padding(.leading,2)
+//                                     Change button foreground color if it is selected or not
+                                    .foregroundColor(selecteBetAmout1 ? Color.white : Color.black)
+//                                    .foregroundColor(Color.white)
                                 BetCoinView()
                             }
                         }
+                        
                         .padding(.leading)
                         
                         HStack {
                             Button(action: {
+                                betAmout10()
                                 print("$10 button pressed")
                             }){
                                 Text("10")
                                     .betAmountLabel()
                                     .modifier(BetAmountShadow())
-                                    
+                                // Change button foreground color if it is selected or not
+                                    .foregroundColor(selecteBetAmout10 ? Color.white : Color.black)
                                 BetCoinView()
+                                
                             }
                         }
                         .padding(.leading)
                         
                         HStack {
                             Button(action: {
+                                betAmout100()
                                 print("$100 button pressed")
                             }){
                                 Text("100")
                                     .betAmountLabel()
                                     .modifier(BetAmountShadow())
                                     .padding(.trailing, 2)
+                                // Change button foreground color if it is selected or not
+                                    .foregroundColor(selecteBetAmout100 ? Color.white : Color.black)
                                 BetCoinView()
+                                
                             }
                         }
                         .padding(.leading)
@@ -186,6 +251,7 @@ struct ContentView: View {
             // MARK: - Overlay Cancel/Quit Buttons
             .overlay(
                 Button(action:{
+                    resetGame()
                     print("Reset game button pressed")
                 }){
                     Image(systemName: "arrow.counterclockwise")
