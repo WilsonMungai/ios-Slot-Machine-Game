@@ -20,6 +20,30 @@ import SwiftUI
 
 struct ContentView: View {
     
+    // Array of images shown in reel
+    let images = ["bell", "cherry", "coin", "grape", "strawberry", "seven"]
+    
+    // MARK: - Variables
+    // Array of reel images
+    @State private var reelImage: Array = [0,1,2]
+    //  Number of coins player has
+    @State private var playerCoins: Int = 100
+    // Payer highscore
+    @State private var playerHighScore: Int = 0
+    // Player's bet amout
+    @State private var betAmount: Int = 1
+
+    // MARK: - Functions
+    // Spin reels and get random images according to index
+    func spinReels() {
+        reelImage[0] = Int.random(in: 0...images.count - 1)
+        reelImage[1] = Int.random(in: 0...images.count - 1)
+        reelImage[2] = Int.random(in: 0...images.count - 1)
+        
+        print(reelImage)
+    }
+    
+    
     // MARK: - Body
     var body: some View {
         ZStack {
@@ -30,10 +54,10 @@ struct ContentView: View {
             .edgesIgnoringSafeArea(.all)
             
             VStack(alignment: .center, spacing: 5) {
-                // MARK: -Header
+                // MARK: - Game logo
                 gameLogo()
                 
-                // MARK: - Game icons
+                // MARK: - Game coins and jackpot
                 HStack {
                     // MARK: - Score Label
                     HStack {
@@ -64,7 +88,8 @@ struct ContentView: View {
                     // MARK: - Reel 1
                     ZStack {
                         ReelView()
-                        Image("bell")
+                        // Get the at index image and show at the reel index
+                        Image(images[reelImage[0]])
                             .resizable()
                             .modifier(ImageModifier())
                     }
@@ -73,7 +98,8 @@ struct ContentView: View {
                         // MARK: - Reel 2
                         ZStack {
                             ReelView()
-                            Image("cherry")
+                            // Get the at index image and show at the reel index
+                            Image(images[reelImage[1]])
                                 .resizable()
                                 .modifier(ImageModifier())
                         }
@@ -82,18 +108,19 @@ struct ContentView: View {
                         // MARK: - Reel 3
                         ZStack {
                             ReelView()
-                            Image("grape")
+                            // Get the at index image and show at the reel index
+                            Image(images[reelImage[2]])
                                 .resizable()
                                 .scaledToFit()
                                 .modifier(ImageModifier())
                         }
-                        
                     }
                     .frame(maxWidth: 500)
                     
                     // MARK: - Spinner Button
                     HStack {
                         Button(action: {
+                            spinReels()
                             print("Spiner button pressed")
                         }){
                             Image("spinner")
@@ -102,10 +129,12 @@ struct ContentView: View {
                                 .modifier(SpinnerModifier())
                         }
                     }
+                }
+                .layoutPriority(2)
                     
                     Spacer ()
                     
-                    // MARK: - Bet Amounts
+                    // MARK: - Bet Amount Buttons
                     // 1 dollar bet amount
                     HStack {
                         HStack {
@@ -149,10 +178,12 @@ struct ContentView: View {
                     }
                     .padding()
                     
-//                    .scaledToFill()
+                    .scaledToFit()
                 }
-            }
+//                .layoutPriority(2)
+//            }
             
+            // MARK: - Overlay Cancel/Quit Buttons
             .overlay(
                 Button(action:{
                     print("Reset game button pressed")
@@ -162,7 +193,7 @@ struct ContentView: View {
                     .modifier(ResetbuttonModifier()),
                     alignment: .topLeading
             )
-//            .padding(.leading)
+//            .padding()
             .overlay(
                 Button(action:{
                     print("Leave game button pressed")
@@ -172,10 +203,11 @@ struct ContentView: View {
                     .modifier(ResetbuttonModifier()),
                     alignment: .topTrailing
             )
-//            .padding(.trailing)
+//            .padding(.trailing, 5)
         }
     }
     
+    // MARK: - Preview
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
             ContentView()
