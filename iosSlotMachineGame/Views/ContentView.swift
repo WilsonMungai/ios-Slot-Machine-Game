@@ -29,13 +29,16 @@ struct ContentView: View {
     //  Number of coins player has
     @State private var playerCoins: Int = 1000
     // Payer highscore
-    @State private var playerHighScore: Int = 0
+    // player high score is determined by the amount of coins they have won. So the game starts at 1000 high score the same as the amount of coins but it will increase if the player wins more than 1,000
+    @State private var playerHighScore: Int = 1000
     // Player's bet amout
-    @State private var betAmount: Int = 1
+    // Game starts off at bet amount 10
+    @State private var betAmount: Int = 10
     
     // Get the selected bet amount
     @State private var selecteBetAmout1: Bool = false
-    @State private var selecteBetAmout10: Bool = false
+    // Game starts off at bet amount 10 selected
+    @State private var selecteBetAmout10: Bool = true
     @State private var selecteBetAmout100: Bool = false
 
     // MARK: - Methods
@@ -72,9 +75,26 @@ struct ContentView: View {
         selecteBetAmout10 = false
     }
     
+    func placeBet() {
+        
+    }
+    
     // check player winnings
     func playerWinning() {
-        
+//        if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage [2] {
+//            wonBet()
+//        }
+        if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage [2] {
+            jackpot()
+            // Update the high score
+            if playerCoins > playerHighScore {
+                highScore()
+            }
+        } else  if reelImage[0] == reelImage[2] && reelImage[1] == reelImage[2] || reelImage[0] == reelImage [2] {
+            // player wins but not jackpot
+        } else {
+//            player loses
+        }
     }
     
     // player win
@@ -83,15 +103,21 @@ struct ContentView: View {
         playerCoins += betAmount
     }
     
+    func jackpot() {
+        playerCoins += betAmount + 200
+        print("!!!!!!Jackpot")
+    }
+    
     // player high score
     func highScore() {
-        
+        playerHighScore = playerCoins
     }
     
     // reset the game
     func resetGame() {
         playerCoins = 1000
-        playerHighScore = 0
+        playerHighScore = 1000
+        betAmout10()
     }
     
     // MARK: - Body
@@ -171,7 +197,10 @@ struct ContentView: View {
                             spinReels()
                             
                             // Update when player wins
+                            playerWinning()
                             
+                            // highscore
+                            highScore()
                             // Game is over
                             
                             print("Spiner button pressed")
