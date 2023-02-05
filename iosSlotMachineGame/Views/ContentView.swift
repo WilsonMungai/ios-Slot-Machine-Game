@@ -75,32 +75,117 @@ struct ContentView: View {
         selecteBetAmout10 = false
     }
     
-    func placeBet() {
-        
-    }
-    
-    // check player winnings
+    // MARK: - check player winnings
     func playerWinning() {
-//        if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage [2] {
-//            wonBet()
-//        }
+        // Three similar images
         if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage [2] {
-            jackpot()
-            // Update the high score
-            if playerCoins > playerHighScore {
+            if reelImage == [0,0,0] {
+                wonBet(val: 10)
+                highScore()
+            } else if reelImage == [1,1,1] {
+                wonBet(val: 20)
+                highScore()
+            } else if reelImage == [2,2,2] {
+                wonBet(val: 20)
+                highScore()
+            } else if reelImage == [3,3,3] {
+                wonBet(val: 30)
+                highScore()
+            } else if reelImage == [4,4,4] {
+                wonBet(val: 40)
+                highScore()
+            } else if reelImage == [5,5,5] {
+                wonBet(val: 30)
                 highScore()
             }
-        } else  if reelImage[0] == reelImage[2] && reelImage[1] == reelImage[2] || reelImage[0] == reelImage [2] {
-            // player wins but not jackpot
-        } else {
-//            player loses
+        }
+//        else if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage [2] {
+//
+//        }
+//        print(images[0])
+//        print(images[1])
+//        print(images[2])
+
+//        if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage [2] {
+//            jackpot()
+//            // Update the high score
+//            if playerCoins > playerHighScore {
+//                highScore()
+//            }
+//
+//        } else  if reelImage[0] == reelImage[2] && reelImage[1] == reelImage[2] || reelImage[0] == reelImage [2] {
+//            // player wins but not jackpot
+//            wonBet(val: 10)
+//            highScore()
+//        }
+//        else {
+//            // player loss
+//            playerLoss()
+//        }
+//        (images[reelImage[0]])
+//        if reelImage[0] == Int(images[0]) && reelImage[1] == Int(images[0]) && reelImage[2] == Int(images[0]) {
+//            wonBet(val: 10);
+//         }
+//        else if reelImage[0] == Int(images[1]) && reelImage[1] == Int(images[1]) && reelImage[2] == Int(images[1]) {
+//            wonBet(val: 10);
+//         }
+//        else if reelImage[0] == Int(images[2]) && reelImage[2] == Int(images[2]) && reelImage[2] == Int(images[2]) {
+//            wonBet(val: 10);
+//         }
+//        else if reelImage[0] == Int(images[3]) && reelImage[2] == Int(images[3]) && reelImage[2] == Int(images[3]) {
+//            wonBet(val: 10);
+//         }
+//        else if reelImage[0] == Int(images[4]) && reelImage[2] == Int(images[4]) && reelImage[2] == Int(images[4]) {
+//            wonBet(val: 10);
+//         }
+//        else if reelImage[0] == Int(images[5]) && reelImage[2] == Int(images[5]) && reelImage[2] == Int(images[5]) {
+//            wonBet(val: 10);
+//         }
+//        else if(Int(images[1]) == 3) {
+//        wonBet(val: 20);
+//        }
+//        else if(Int(images[2]) == 3) {
+//        wonBet(val: 40);
+//        }
+//        else if(Int(images[3]) == 3) {
+//        wonBet(val: 50);
+//        }
+//        else if(Int(images[4]) == 3) {
+//        wonBet(val: 75);
+//        }
+//        else if(Int(images[5]) == 3) {
+//        wonBet(val: 100);
+//        }
+//        else if (Int(images[0]) == 2) {
+//        wonBet(val: 2);
+//        }
+//        else if(Int(images[1]) == 2) {
+//        wonBet(val: 4);
+//        }
+//        else if(Int(images[2]) == 2) {
+//        wonBet(val: 5);
+//        }
+//        else if(Int(images[3]) == 2) {
+//        wonBet(val: 3);
+//        }
+//        else if(Int(images[4]) == 2) {
+//         wonBet(val: 2);
+//        }
+//        else if(Int(images[5]) == 2) {
+//        wonBet(val: 10);
+//        }
+//        else if(Int(images[5]) == 1) {
+//        wonBet(val: 5);
+//        }
+        else {
+            playerLoss()
         }
     }
     
     // player win
-    func wonBet() {
+    func wonBet(val: Int) {
         // Calculate what player has won by multiplying the bet amount
-        playerCoins += betAmount
+        playerCoins += betAmount * val
     }
     
     func jackpot() {
@@ -108,9 +193,19 @@ struct ContentView: View {
         print("!!!!!!Jackpot")
     }
     
+    // Player loss
+    func playerLoss() {
+        playerCoins -= betAmount
+    }
+    
     // player high score
     func highScore() {
         playerHighScore = playerCoins
+    }
+    
+    // when the player coins reach zero
+    func gameOver() {
+        
     }
     
     // reset the game
@@ -152,8 +247,9 @@ struct ContentView: View {
                         Text("\(playerHighScore)")
                             .playerScore()
                             .modifier(BetAmountShadow())
-                        Text("Current\nJackpot".uppercased())
+                        Text("Your\nHighScore".uppercased())
                             .playerScoreLabel()
+//                            .multilineTextAlignment(.trailing)
                     }
                     .padding(.trailing)
                 }
@@ -199,8 +295,6 @@ struct ContentView: View {
                             // Update when player wins
                             playerWinning()
                             
-                            // highscore
-                            highScore()
                             // Game is over
                             
                             print("Spiner button pressed")
@@ -230,7 +324,6 @@ struct ContentView: View {
                                     .padding(.leading,2)
 //                                     Change button foreground color if it is selected or not
                                     .foregroundColor(selecteBetAmout1 ? Color.white : Color.black)
-//                                    .foregroundColor(Color.white)
                                 BetCoinView()
                             }
                         }
