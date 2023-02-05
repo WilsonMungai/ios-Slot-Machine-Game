@@ -18,7 +18,7 @@ This is a simple slot machine game that has three reel images, a spin button tha
 
 import SwiftUI
 
-struct popUpImage: View {
+struct PopUpImage: View {
     // MARK: - Logo Body
     var body: some View {
         Image("dealer")
@@ -28,8 +28,8 @@ struct popUpImage: View {
     }
 }
 
-struct popUpImage_Previews: PreviewProvider {
+struct PopUpImage_Previews: PreviewProvider {
     static var previews: some View {
-        popUpImage()
+        PopUpImage()
     }
 }

@@ -113,6 +113,7 @@ struct GameOverLabel: ViewModifier {
             .frame(minWidth: 0, maxWidth: .infinity)
             .background(Color(.white))
             .foregroundColor(Color("gold"))
+            .multilineTextAlignment(.center)
     }
 }
 

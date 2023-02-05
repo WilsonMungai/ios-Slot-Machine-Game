@@ -100,32 +100,34 @@ struct ContentView: View {
             } else if reelImage == [5,5,5] {
                 // Player wins jackpot
                 // Winner, winner, chicken dinner!
+                // Jackpot
+                jackpot()
                 wonBet(val: 30)
                 highScore()
             }
         }
-        //        else if reelImage[0] == reelImage[1] || reelImage[0] == reelImage[2] || reelImage[1] == reelImage [2] {
-        //            if reelImage == [0,0,0] {
-        //                wonBet(val: 10)
-        //                highScore()
-        //            } else if reelImage == [1,1,1] {
-        //                wonBet(val: 20)
-        //                highScore()
-        //            } else if reelImage == [2,2,2] {
-        //                wonBet(val: 20)
-        //                highScore()
-        //            } else if reelImage == [3,3,3] {
-        //                wonBet(val: 30)
-        //                highScore()
-        //            } else if reelImage == [4,4,4] {
-        //                wonBet(val: 40)
-        //                highScore()
-        //            } else if reelImage == [5,5,5] {
-        //                wonBet(val: 30)
-        //                highScore()
-        //            }
-        //        }
-        else {
+//                else if reelImage[0] == reelImage[1] || reelImage[0] == reelImage[2] || reelImage[1] == reelImage [2] {
+//                    if reelImage == [0,0,0]  {
+//                        wonBet(val: 10)
+//                        highScore()
+//                    } else if reelImage == [1,1,1] {
+//                        wonBet(val: 20)
+//                        highScore()
+//                    } else if reelImage == [2,2,2] {
+//                        wonBet(val: 20)
+//                        highScore()
+//                    } else if reelImage == [3,3,3] {
+//                        wonBet(val: 30)
+//                        highScore()
+//                    } else if reelImage == [4,4,4] {
+//                        wonBet(val: 40)
+//                        highScore()
+//                    } else if reelImage == [5,5,5] {
+//                        wonBet(val: 30)
+//                        highScore()
+//                    }
+//                }
+         else {
             playerLoss()
         }
     }
@@ -137,13 +139,19 @@ struct ContentView: View {
     }
     
     func jackpot() {
-        playerCoins += betAmount + 200
+            popUp = true
+            playerCoins += betAmount + 5000
         print("!!!!!!Jackpot")
     }
     
     // Player loss
     func playerLoss() {
-        playerCoins -= betAmount
+        // Dont deduct if nothing is selected
+        if selecteBetAmout1 == false && selecteBetAmout10 == false && selecteBetAmout100 == false {
+            popUp = true
+        } else{
+            playerCoins -= betAmount
+        }
     }
     
     // player high score
@@ -163,6 +171,9 @@ struct ContentView: View {
     // reset the game
     func resetGame() {
         playerCoins = 1000
+        selecteBetAmout1 = false
+        selecteBetAmout10 = false
+        selecteBetAmout100 = false
     }
     
     // MARK: - Body
@@ -242,26 +253,26 @@ struct ContentView: View {
                             // Spin the reels
                             if selecteBetAmout1 == false && selecteBetAmout10 == false && selecteBetAmout100 == false {
                                 // return modalToPlaceBet
-                                print("please select amout")
-                            } else if popUp == true {
-                                print("you have lost")
+                                popUp = true
+                                selecteBetAmout1 = false
+                                selecteBetAmout10 = false
+                                selecteBetAmout100 = false
                             } else {
                                 spinReels()
                             }
-                            
                             // Update when player wins
                             playerWinning()
                             
                             // Game is over
                             gameOver()
-                            
-                            print("Spiner button pressed")
                         }){
                             Image("spinner")
                                 .renderingMode(.original)
                                 .resizable()
                                 .modifier(SpinnerModifier())
                         }
+                        // disable button when pop up appears
+                        .disabled(popUp == true)
                     }
                 }
                 .layoutPriority(2)
@@ -344,6 +355,7 @@ struct ContentView: View {
                 }){
                     Image(systemName: "arrow.counterclockwise")
                 }
+                    .disabled(popUp == true)
                     .modifier(ResetbuttonModifier()),
                 alignment: .topLeading
             )
@@ -355,6 +367,7 @@ struct ContentView: View {
                 }){
                     Image(systemName: "xmark.circle")
                 }
+                    .disabled(popUp == true)
                     .modifier(ResetbuttonModifier()),
                 alignment: .topTrailing
             )
@@ -362,7 +375,7 @@ struct ContentView: View {
             .frame(maxWidth: 720)
             
             // Blur background when pop up appears
-            .blur(radius: $popUp.wrappedValue ? 2 : 0, opaque: false)
+            .blur(radius: $popUp.wrappedValue ? 3 : 0, opaque: false)
             
             // MARK: - Pop Up
             if $popUp.wrappedValue {
@@ -371,35 +384,72 @@ struct ContentView: View {
                         .edgesIgnoringSafeArea(.all)
                     
                     // Model  view
-                    VStack {
-                        Text("Game Over")
-                            .betAmountLabel()
-                            .modifier(GameOverLabel())
-                        
-                        Spacer()
-                        
-                        VStack(alignment: .center, spacing: 16) {
-                            // Image
-                            popUpImage()
-                            Text("The House Always Wins!!!\n Better Luck Next Time 😉")
-                                .popUpMessage()
-                                .modifier(PopUpMessageModifier())
+                    // Game Over pop up
+                    if playerCoins == 0 {
+                        VStack {
+                            Text("Game Over")
+                                .betAmountLabel()
+                                .modifier(GameOverLabel())
                             
-                            // Button
-                            Button(action: {
-                                popUp = false
-                                playerCoins = 1000
-                            }) {
-                                Text("New Game".uppercased())
+                            Spacer()
+                            
+                            VStack(alignment: .center, spacing: 16) {
+                                // Image
+                                PopUpImage()
+                                Text("The House Always Wins!!!\n Better Luck Next Time 😉")
                                     .popUpMessage()
-                                    .modifier(PopUpButton())
+                                    .modifier(PopUpMessageModifier())
+                                
+                                // Button
+                                Button(action: {
+                                    popUp = false
+                                    // Reset the game
+                                    playerCoins = 1000
+                                    selecteBetAmout1 = false
+                                    selecteBetAmout10 = false
+                                    selecteBetAmout100 = false
+                                }) {
+                                    Text("New Game".uppercased())
+                                        .popUpMessage()
+                                        .modifier(PopUpButton())
+                                }
                             }
-                        }
-                        Spacer()
-                    }.frame(minWidth: 200, idealWidth: 280, maxWidth: 320, minHeight: 290, idealHeight: 400, maxHeight: 350, alignment: .center)
-                        .background(Color("gold"))
-                        .cornerRadius(20)
-                        .shadow(color: Color("transparent"), radius: 6, x: 0, y: 8)
+                            Spacer()
+                        }.frame(minWidth: 200, idealWidth: 280, maxWidth: 320, minHeight: 290, idealHeight: 400, maxHeight: 350, alignment: .center)
+                            .background(Color("gold"))
+                            .cornerRadius(20)
+                            .shadow(color: Color("transparent"), radius: 6, x: 0, y: 8)
+                        // Instructs player to select bet amount before spinning
+                    } else {
+                        VStack {
+                            Text("Choose \n Bet Amount")
+                                .betAmountLabel()
+                                .modifier(GameOverLabel())
+                            
+                            Spacer()
+                            
+                            VStack(alignment: .center, spacing: 16) {
+                                // Image
+                                PlaceBetImage()
+                                Text("Don't Be Afraid To Place Your Bet")
+                                    .popUpMessage()
+                                    .modifier(PopUpMessageModifier())
+                                
+                                // Button
+                                Button(action: {
+                                    popUp = false
+                                }) {
+                                    Text("Select Amount".uppercased())
+                                        .popUpMessage()
+                                        .modifier(PopUpButton())
+                                }
+                            }
+                            Spacer()
+                        }.frame(minWidth: 200, idealWidth: 280, maxWidth: 320, minHeight: 290, idealHeight: 400, maxHeight: 350, alignment: .center)
+                            .background(Color("gold"))
+                            .cornerRadius(20)
+                            .shadow(color: Color("transparent"), radius: 6, x: 0, y: 8)
+                    }
                 }
             }
         }
