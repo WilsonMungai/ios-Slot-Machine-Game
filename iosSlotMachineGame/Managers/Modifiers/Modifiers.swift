@@ -10,9 +10,9 @@ Du, Pengfei / Student Number: 301276081
  
 This is a simple slot machine game that has three reel images, a spin button that changes the images in the reels. The user can see the amount of coins they have in the player coins label, and also see the jackpot amount in  the jackpot label. There are different bet amounts which the user can select. The player has the permission to reset the game which will reset everything in the game. There is also an option to quit the game.
  
- Version 1
+ Version 2
  
- Last modified: 22/January/2023
+ Last modified: 5/February/2023
  
  */
 
@@ -77,7 +77,7 @@ struct SpinnerModifier: ViewModifier {
     }
 }
 
-// MARK: - Spinner Modifier
+// MARK: - Bet Amount modifier
 struct BetAmountModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -88,7 +88,7 @@ struct BetAmountModifier: ViewModifier {
     }
 }
 
-// MARK: - Shadow modifier
+// MARK: - Bet Amount Shadow modifier
 struct BetAmountShadow: ViewModifier {
     func body(content: Content) -> some View {
         content .shadow(color: Color("transparent"), radius: 0, x: 0, y: 3)
@@ -100,6 +100,55 @@ struct ResetbuttonModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.title)
-        .accentColor(.white)
+            .accentColor(Color("gold"))
     }
 }
+
+// MARK: - Pop Up Modifiers
+// MARK: - Game Over Label modifier
+struct GameOverLabel: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .background(Color(.white))
+            .foregroundColor(Color("gold"))
+    }
+}
+
+// MARK: - Pop Up Message Modifier
+struct PopUpMessageModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .lineLimit(2)
+            .multilineTextAlignment(.center)
+            .foregroundColor(Color.white)
+            .layoutPriority(1)
+    }
+}
+
+// MARK: - Pop Up Message Modifier
+struct PopUpButton: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .accentColor(Color(.white))
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .frame(minWidth: 128)
+            .background(Capsule()
+                .strokeBorder(lineWidth: 1.75)
+                .foregroundColor(Color(.white)))
+    }
+}
+
+
+   
+
+
+
+
+   
+
+    
+
+

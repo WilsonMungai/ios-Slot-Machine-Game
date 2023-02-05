@@ -18,16 +18,18 @@ This is a simple slot machine game that has three reel images, a spin button tha
 
 import SwiftUI
 
-struct BetCoinView: View {
+struct popUpImage: View {
+    // MARK: - Logo Body
     var body: some View {
-        Image("casino-chip")
+        Image("dealer")
             .resizable()
-            .modifier(BetAmountModifier())
+            .scaledToFit()
+            .frame(maxHeight: 172)
     }
 }
 
-struct BetCoinView_Previews: PreviewProvider {
+struct popUpImage_Previews: PreviewProvider {
     static var previews: some View {
-        BetCoinView()
+        popUpImage()
     }
 }

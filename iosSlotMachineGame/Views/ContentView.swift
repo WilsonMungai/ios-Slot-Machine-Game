@@ -1,18 +1,18 @@
 /*
  
-MAPD 724 Slot Machine
+ MAPD 724 Slot Machine
  
-Group 10 Members
+ Group 10 Members
  
-Nyarko, Betrand / Student Number: 301293794
-Muguthi, Wilson Mungai / Student Number: 301287641
-Du, Pengfei / Student Number: 301276081
+ Nyarko, Betrand / Student Number: 301293794
+ Muguthi, Wilson Mungai / Student Number: 301287641
+ Du, Pengfei / Student Number: 301276081
  
-This is a simple slot machine game that has three reel images, a spin button that changes the images in the reels. The user can see the amount of coins they have in the player coins label, and also see the jackpot amount in  the jackpot label. There are different bet amounts which the user can select. The player has the permission to reset the game which will reset everything in the game. There is also an option to quit the game.
+ This is a simple slot machine game that has three reel images, a spin button that changes the images in the reels. The user can see the amount of coins they have in the player coins label, and also see the jackpot amount in  the jackpot label. There are different bet amounts which the user can select. The player has the permission to reset the game which will reset everything in the game. There is also an option to quit the game.
  
- Version 1
+ Version 2
  
- Last modified: 22/January/2023
+ Last modified: 5/February/2023
  
  */
 
@@ -21,7 +21,7 @@ import SwiftUI
 struct ContentView: View {
     
     // Array of images shown in reel
-    let images = ["bell", "cherry", "coin", "grape", "strawberry", "seven"]
+    let images = ["bell", "cherry", "grape", "coin", "strawberry", "seven"]
     
     // MARK: - Variables
     // Array of reel images
@@ -33,14 +33,17 @@ struct ContentView: View {
     @State private var playerHighScore: Int = 1000
     // Player's bet amout
     // Game starts off at bet amount 10
-    @State private var betAmount: Int = 10
+    @State private var betAmount: Int = 0
     
     // Get the selected bet amount
     @State private var selecteBetAmout1: Bool = false
-    // Game starts off at bet amount 10 selected
-    @State private var selecteBetAmout10: Bool = true
+    @State private var selecteBetAmout10: Bool = false
     @State private var selecteBetAmout100: Bool = false
-
+    
+    @State private var spinButton: Bool = false
+    
+    @State private var popUp: Bool = false
+    
     // MARK: - Methods
     // Spin reels and get random images according to index
     func spinReels() {
@@ -95,88 +98,33 @@ struct ContentView: View {
                 wonBet(val: 40)
                 highScore()
             } else if reelImage == [5,5,5] {
+                // Player wins jackpot
+                // Winner, winner, chicken dinner!
                 wonBet(val: 30)
                 highScore()
             }
         }
-//        else if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage [2] {
-//
-//        }
-//        print(images[0])
-//        print(images[1])
-//        print(images[2])
-
-//        if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage [2] {
-//            jackpot()
-//            // Update the high score
-//            if playerCoins > playerHighScore {
-//                highScore()
-//            }
-//
-//        } else  if reelImage[0] == reelImage[2] && reelImage[1] == reelImage[2] || reelImage[0] == reelImage [2] {
-//            // player wins but not jackpot
-//            wonBet(val: 10)
-//            highScore()
-//        }
-//        else {
-//            // player loss
-//            playerLoss()
-//        }
-//        (images[reelImage[0]])
-//        if reelImage[0] == Int(images[0]) && reelImage[1] == Int(images[0]) && reelImage[2] == Int(images[0]) {
-//            wonBet(val: 10);
-//         }
-//        else if reelImage[0] == Int(images[1]) && reelImage[1] == Int(images[1]) && reelImage[2] == Int(images[1]) {
-//            wonBet(val: 10);
-//         }
-//        else if reelImage[0] == Int(images[2]) && reelImage[2] == Int(images[2]) && reelImage[2] == Int(images[2]) {
-//            wonBet(val: 10);
-//         }
-//        else if reelImage[0] == Int(images[3]) && reelImage[2] == Int(images[3]) && reelImage[2] == Int(images[3]) {
-//            wonBet(val: 10);
-//         }
-//        else if reelImage[0] == Int(images[4]) && reelImage[2] == Int(images[4]) && reelImage[2] == Int(images[4]) {
-//            wonBet(val: 10);
-//         }
-//        else if reelImage[0] == Int(images[5]) && reelImage[2] == Int(images[5]) && reelImage[2] == Int(images[5]) {
-//            wonBet(val: 10);
-//         }
-//        else if(Int(images[1]) == 3) {
-//        wonBet(val: 20);
-//        }
-//        else if(Int(images[2]) == 3) {
-//        wonBet(val: 40);
-//        }
-//        else if(Int(images[3]) == 3) {
-//        wonBet(val: 50);
-//        }
-//        else if(Int(images[4]) == 3) {
-//        wonBet(val: 75);
-//        }
-//        else if(Int(images[5]) == 3) {
-//        wonBet(val: 100);
-//        }
-//        else if (Int(images[0]) == 2) {
-//        wonBet(val: 2);
-//        }
-//        else if(Int(images[1]) == 2) {
-//        wonBet(val: 4);
-//        }
-//        else if(Int(images[2]) == 2) {
-//        wonBet(val: 5);
-//        }
-//        else if(Int(images[3]) == 2) {
-//        wonBet(val: 3);
-//        }
-//        else if(Int(images[4]) == 2) {
-//         wonBet(val: 2);
-//        }
-//        else if(Int(images[5]) == 2) {
-//        wonBet(val: 10);
-//        }
-//        else if(Int(images[5]) == 1) {
-//        wonBet(val: 5);
-//        }
+        //        else if reelImage[0] == reelImage[1] || reelImage[0] == reelImage[2] || reelImage[1] == reelImage [2] {
+        //            if reelImage == [0,0,0] {
+        //                wonBet(val: 10)
+        //                highScore()
+        //            } else if reelImage == [1,1,1] {
+        //                wonBet(val: 20)
+        //                highScore()
+        //            } else if reelImage == [2,2,2] {
+        //                wonBet(val: 20)
+        //                highScore()
+        //            } else if reelImage == [3,3,3] {
+        //                wonBet(val: 30)
+        //                highScore()
+        //            } else if reelImage == [4,4,4] {
+        //                wonBet(val: 40)
+        //                highScore()
+        //            } else if reelImage == [5,5,5] {
+        //                wonBet(val: 30)
+        //                highScore()
+        //            }
+        //        }
         else {
             playerLoss()
         }
@@ -200,19 +148,21 @@ struct ContentView: View {
     
     // player high score
     func highScore() {
-        playerHighScore = playerCoins
+        if playerCoins > playerHighScore {
+            playerHighScore = playerCoins
+        }
     }
     
     // when the player coins reach zero
     func gameOver() {
-        
+        if playerCoins == 0 {
+            popUp = true
+        }
     }
     
     // reset the game
     func resetGame() {
         playerCoins = 1000
-        playerHighScore = 1000
-        betAmout10()
     }
     
     // MARK: - Body
@@ -249,7 +199,7 @@ struct ContentView: View {
                             .modifier(BetAmountShadow())
                         Text("Your\nHighScore".uppercased())
                             .playerScoreLabel()
-//                            .multilineTextAlignment(.trailing)
+                        //                            .multilineTextAlignment(.trailing)
                     }
                     .padding(.trailing)
                 }
@@ -290,12 +240,20 @@ struct ContentView: View {
                     HStack {
                         Button(action: {
                             // Spin the reels
-                            spinReels()
+                            if selecteBetAmout1 == false && selecteBetAmout10 == false && selecteBetAmout100 == false {
+                                // return modalToPlaceBet
+                                print("please select amout")
+                            } else if popUp == true {
+                                print("you have lost")
+                            } else {
+                                spinReels()
+                            }
                             
                             // Update when player wins
                             playerWinning()
                             
                             // Game is over
+                            gameOver()
                             
                             print("Spiner button pressed")
                         }){
@@ -307,69 +265,77 @@ struct ContentView: View {
                     }
                 }
                 .layoutPriority(2)
-                    
-                    Spacer ()
-                    
-                    // MARK: - Bet Amount Buttons
-                    // 1 dollar bet amount
+                
+                Spacer ()
+                
+                // MARK: - Bet Amount Buttons
+                // 1 dollar bet amount
+                HStack {
                     HStack {
-                        HStack {
-                            Button(action: {
-                                betAmout1()
-                                print("$1 button pressed")
-                            }){
-                                Text("1")
-                                    .betAmountLabel()
-                                    .modifier(BetAmountShadow())
-                                    .padding(.leading,2)
-//                                     Change button foreground color if it is selected or not
-                                    .foregroundColor(selecteBetAmout1 ? Color.white : Color.black)
-                                BetCoinView()
-                            }
+                        Button(action: {
+                            betAmout1()
+                            print("$1 button pressed")
+                        }){
+                            Text("1")
+                                .betAmountLabel()
+                                .modifier(BetAmountShadow())
+                                .padding(.leading,2)
+                            // Change button foreground color if it is selected or not
+                                .foregroundColor(selecteBetAmout1 ? Color.white : Color.black)
+                                .background( selecteBetAmout1 ? Capsule()
+                                    .strokeBorder(lineWidth: 2)
+                                    .foregroundColor(Color("gold")) : Capsule()
+                                    .strokeBorder(lineWidth: 0)
+                                    .foregroundColor(Color("transparent")) )
+                            BetCoinView()
                         }
-                        
-                        .padding(.leading)
-                        
-                        HStack {
-                            Button(action: {
-                                betAmout10()
-                                print("$10 button pressed")
-                            }){
-                                Text("10")
-                                    .betAmountLabel()
-                                    .modifier(BetAmountShadow())
-                                // Change button foreground color if it is selected or not
-                                    .foregroundColor(selecteBetAmout10 ? Color.white : Color.black)
-                                BetCoinView()
-                                
-                            }
-                        }
-                        .padding(.leading)
-                        
-                        HStack {
-                            Button(action: {
-                                betAmout100()
-                                print("$100 button pressed")
-                            }){
-                                Text("100")
-                                    .betAmountLabel()
-                                    .modifier(BetAmountShadow())
-                                    .padding(.trailing, 2)
-                                // Change button foreground color if it is selected or not
-                                    .foregroundColor(selecteBetAmout100 ? Color.white : Color.black)
-                                BetCoinView()
-                                
-                            }
-                        }
-                        .padding(.leading)
                     }
-                    .padding()
                     
-                    .scaledToFit()
+                    HStack {
+                        Button(action: {
+                            betAmout10()
+                            print("$10 button pressed")
+                        }){
+                            Text("10")
+                                .betAmountLabel()
+                                .modifier(BetAmountShadow())
+                            // Change button foreground color if it is selected or not
+                                .foregroundColor(selecteBetAmout10 ? Color.white : Color.black)
+                                .background( selecteBetAmout10 ? Capsule()
+                                    .strokeBorder(lineWidth: 2)
+                                    .foregroundColor(Color("gold")): Capsule()
+                                    .strokeBorder(lineWidth: 0)
+                                    .foregroundColor(Color("transparent")))
+                            BetCoinView()
+                            
+                        }
+                    }
+                    
+                    HStack {
+                        Button(action: {
+                            betAmout100()
+                            print("$100 button pressed")
+                        }){
+                            Text("100")
+                                .betAmountLabel()
+                                .modifier(BetAmountShadow())
+                                .padding(.trailing, 2)
+                            // Change button foreground color if it is selected or not
+                                .foregroundColor(selecteBetAmout100 ? Color.white : Color.black)
+                                .background( selecteBetAmout100 ? Capsule()
+                                    .strokeBorder(lineWidth: 2)
+                                    .foregroundColor(Color("gold")) : Capsule()
+                                    .strokeBorder(lineWidth: 0)
+                                    .foregroundColor(Color("transparent")) )
+                            BetCoinView()
+                            
+                        }
+                    }
                 }
-//                .layoutPriority(2)
-//            }
-            
+                
+                Spacer()
+                .scaledToFit()
+            }
             // MARK: - Overlay Cancel/Quit Buttons
             .overlay(
                 Button(action:{
@@ -379,9 +345,10 @@ struct ContentView: View {
                     Image(systemName: "arrow.counterclockwise")
                 }
                     .modifier(ResetbuttonModifier()),
-                    alignment: .topLeading
+                alignment: .topLeading
             )
-//            .padding()
+            .padding(.all, 1)
+            .frame(maxWidth: 720)
             .overlay(
                 Button(action:{
                     print("Leave game button pressed")
@@ -389,12 +356,54 @@ struct ContentView: View {
                     Image(systemName: "xmark.circle")
                 }
                     .modifier(ResetbuttonModifier()),
-                    alignment: .topTrailing
+                alignment: .topTrailing
             )
-//            .padding(.trailing, 5)
+            .padding(.all, 1)
+            .frame(maxWidth: 720)
+            
+            // Blur background when pop up appears
+            .blur(radius: $popUp.wrappedValue ? 2 : 0, opaque: false)
+            
+            // MARK: - Pop Up
+            if $popUp.wrappedValue {
+                ZStack {
+                    Color("transparet")
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    // Model  view
+                    VStack {
+                        Text("Game Over")
+                            .betAmountLabel()
+                            .modifier(GameOverLabel())
+                        
+                        Spacer()
+                        
+                        VStack(alignment: .center, spacing: 16) {
+                            // Image
+                            popUpImage()
+                            Text("The House Always Wins!!!\n Better Luck Next Time 😉")
+                                .popUpMessage()
+                                .modifier(PopUpMessageModifier())
+                            
+                            // Button
+                            Button(action: {
+                                popUp = false
+                                playerCoins = 1000
+                            }) {
+                                Text("New Game".uppercased())
+                                    .popUpMessage()
+                                    .modifier(PopUpButton())
+                            }
+                        }
+                        Spacer()
+                    }.frame(minWidth: 200, idealWidth: 280, maxWidth: 320, minHeight: 290, idealHeight: 400, maxHeight: 350, alignment: .center)
+                        .background(Color("gold"))
+                        .cornerRadius(20)
+                        .shadow(color: Color("transparent"), radius: 6, x: 0, y: 8)
+                }
+            }
         }
     }
-    
     // MARK: - Preview
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
