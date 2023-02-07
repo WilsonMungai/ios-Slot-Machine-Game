@@ -142,6 +142,17 @@ struct PopUpButton: ViewModifier {
     }
 }
 
+// MARK: - Pop Up Message Modifier
+struct PopUpView: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(minWidth: 200, idealWidth: 280, maxWidth: 320, minHeight: 290, idealHeight: 400, maxHeight: 350, alignment: .center)
+                .background(Color("gold"))
+                .cornerRadius(20)
+                .shadow(color: Color("transparent"), radius: 6, x: 0, y: 8)
+    }
+}
+
 
    
 

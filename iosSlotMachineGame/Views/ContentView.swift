@@ -21,7 +21,7 @@ import SwiftUI
 struct ContentView: View {
     
     // Array of images shown in reel
-    let images = ["bell", "cherry", "grape", "coin", "strawberry", "seven"]
+    let images = ["bell", "cherry", "grape", "coin", "strawberry", "orange", "banana", "seven"]
     
     // MARK: - Variables
     // Array of reel images
@@ -40,8 +40,7 @@ struct ContentView: View {
     @State private var selecteBetAmout10: Bool = false
     @State private var selecteBetAmout100: Bool = false
     
-    @State private var spinButton: Bool = false
-    
+    // Pop up
     @State private var popUp: Bool = false
     
     // MARK: - Methods
@@ -80,55 +79,83 @@ struct ContentView: View {
     
     // MARK: - check player winnings
     func playerWinning() {
-        // Three similar images
-        if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage [2] {
-            if reelImage == [0,0,0] {
-                wonBet(val: 10)
-                highScore()
-            } else if reelImage == [1,1,1] {
-                wonBet(val: 20)
-                highScore()
-            } else if reelImage == [2,2,2] {
-                wonBet(val: 20)
-                highScore()
-            } else if reelImage == [3,3,3] {
-                wonBet(val: 30)
-                highScore()
-            } else if reelImage == [4,4,4] {
-                wonBet(val: 40)
-                highScore()
-            } else if reelImage == [5,5,5] {
-                // Player wins jackpot
-                // Winner, winner, chicken dinner!
-                // Jackpot
-                jackpot()
-                wonBet(val: 30)
-                highScore()
-            }
+        var counts: [Int: Int] = [:]
+        for image in reelImage {
+            counts[image] = (counts[image] ?? 0) + 1
         }
-//                else if reelImage[0] == reelImage[1] || reelImage[0] == reelImage[2] || reelImage[1] == reelImage [2] {
-//                    if reelImage == [0,0,0]  {
-//                        wonBet(val: 10)
-//                        highScore()
-//                    } else if reelImage == [1,1,1] {
-//                        wonBet(val: 20)
-//                        highScore()
-//                    } else if reelImage == [2,2,2] {
-//                        wonBet(val: 20)
-//                        highScore()
-//                    } else if reelImage == [3,3,3] {
-//                        wonBet(val: 30)
-//                        highScore()
-//                    } else if reelImage == [4,4,4] {
-//                        wonBet(val: 40)
-//                        highScore()
-//                    } else if reelImage == [5,5,5] {
-//                        wonBet(val: 30)
-//                        highScore()
-//                    }
-//                }
-         else {
+        print(counts)
+        
+        if reelImage[0] != reelImage[1] && reelImage[1] != reelImage[2] && reelImage[0] != reelImage[2] {
             playerLoss()
+        } else {
+            for (key, value) in counts {
+                if key == 0 {
+                    if value == 2 {
+                        wonBet(val: 3)
+                        highScore()
+                    } else if value == 3 {
+                        wonBet(val: 50)
+                        highScore()
+                    }
+                } else if key == 1 {
+                    if value == 2 {
+                        wonBet(val: 2)
+                        highScore()
+                    } else if value == 3 {
+                        wonBet(val: 10)
+                        highScore()
+                    }
+                } else if key == 2 {
+                    if value == 2 {
+                        wonBet(val: 2)
+                        highScore()
+                    } else if value == 3 {
+                        wonBet(val: 15)
+                        highScore()
+                    }
+                } else if key == 3 {
+                    if value == 2 {
+                        wonBet(val: 3)
+                        highScore()
+                    } else if value == 3 {
+                        wonBet(val: 40)
+                        highScore()
+                    }
+                } else if key == 4 {
+                    if value == 2 {
+                        wonBet(val: 2)
+                        highScore()
+                    } else if value == 3 {
+                        wonBet(val: 20)
+                        highScore()
+                    }
+                } else if key == 5 {
+                    if value == 2 {
+                        wonBet(val: 2)
+                        highScore()
+                    } else if value == 3 {
+                        wonBet(val: 25)
+                        highScore()
+                    }
+                } else if key == 6 {
+                    if value == 2 {
+                        wonBet(val: 2)
+                        highScore()
+                    } else if value == 3 {
+                        wonBet(val: 30)
+                        highScore()
+                    }
+                } else if key == 7 {
+                    if value == 2 {
+                        wonBet(val: 10)
+                        highScore()
+                    } else if value == 3 {
+                        jackpot()
+                        wonBet(val: 60)
+                        highScore()
+                    }
+                }
+            }
         }
     }
     
@@ -136,11 +163,14 @@ struct ContentView: View {
     func wonBet(val: Int) {
         // Calculate what player has won by multiplying the bet amount
         playerCoins += betAmount * val
+        
+        print(playerCoins)
     }
     
+    // Player jackpot
     func jackpot() {
             popUp = true
-            playerCoins += betAmount + 5000
+            playerCoins += betAmount + 1000
         print("!!!!!!Jackpot")
     }
     
@@ -149,7 +179,7 @@ struct ContentView: View {
         // Dont deduct if nothing is selected
         if selecteBetAmout1 == false && selecteBetAmout10 == false && selecteBetAmout100 == false {
             popUp = true
-        } else{
+        } else {
             playerCoins -= betAmount
         }
     }
@@ -254,9 +284,7 @@ struct ContentView: View {
                             if selecteBetAmout1 == false && selecteBetAmout10 == false && selecteBetAmout100 == false {
                                 // return modalToPlaceBet
                                 popUp = true
-                                selecteBetAmout1 = false
-                                selecteBetAmout10 = false
-                                selecteBetAmout100 = false
+                                
                             } else {
                                 spinReels()
                             }
@@ -300,6 +328,7 @@ struct ContentView: View {
                                     .foregroundColor(Color("transparent")) )
                             BetCoinView()
                         }
+                        .disabled(popUp == true)
                     }
                     
                     HStack {
@@ -320,6 +349,7 @@ struct ContentView: View {
                             BetCoinView()
                             
                         }
+                        .disabled(popUp == true)
                     }
                     
                     HStack {
@@ -341,6 +371,7 @@ struct ContentView: View {
                             BetCoinView()
                             
                         }
+                        .disabled(popUp == true)
                     }
                 }
                 
@@ -403,11 +434,11 @@ struct ContentView: View {
                                 // Button
                                 Button(action: {
                                     popUp = false
-                                    // Reset the game
-                                    playerCoins = 1000
                                     selecteBetAmout1 = false
                                     selecteBetAmout10 = false
                                     selecteBetAmout100 = false
+                                    // Reset coins
+                                    playerCoins = 1000
                                 }) {
                                     Text("New Game".uppercased())
                                         .popUpMessage()
@@ -415,11 +446,36 @@ struct ContentView: View {
                                 }
                             }
                             Spacer()
-                        }.frame(minWidth: 200, idealWidth: 280, maxWidth: 320, minHeight: 290, idealHeight: 400, maxHeight: 350, alignment: .center)
-                            .background(Color("gold"))
-                            .cornerRadius(20)
-                            .shadow(color: Color("transparent"), radius: 6, x: 0, y: 8)
-                        // Instructs player to select bet amount before spinning
+                        }.modifier(PopUpView())
+                        
+                        // JackPot Popup
+                    } else if reelImage == [7,7,7] {
+                        VStack {
+                            Text("Congratulations!!!")
+                                .betAmountLabel()
+                                .modifier(GameOverLabel())
+                            
+                            Spacer()
+                            
+                            VStack(alignment: .center, spacing: 16) {
+                                // Image
+                                JackpotImage()
+                                Text("Winner, winner chicken dinner!!!")
+                                    .popUpMessage()
+                                    .modifier(PopUpMessageModifier())
+                                // Button
+                                Button(action: {
+                                    popUp = false
+                                }) {
+                                    Text("Continue Winning".uppercased())
+                                        .popUpMessage()
+                                        .modifier(PopUpButton())
+                                }
+                            }
+                            Spacer()
+                        }.modifier(PopUpView())
+                        
+                    // Prompt for player to choose bet amount
                     } else {
                         VStack {
                             Text("Choose \n Bet Amount")
@@ -445,10 +501,7 @@ struct ContentView: View {
                                 }
                             }
                             Spacer()
-                        }.frame(minWidth: 200, idealWidth: 280, maxWidth: 320, minHeight: 290, idealHeight: 400, maxHeight: 350, alignment: .center)
-                            .background(Color("gold"))
-                            .cornerRadius(20)
-                            .shadow(color: Color("transparent"), radius: 6, x: 0, y: 8)
+                        }.modifier(PopUpView())
                     }
                 }
             }

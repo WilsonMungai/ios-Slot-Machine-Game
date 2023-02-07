@@ -10,6 +10,7 @@
 		C89A522B297DEA31009DF722 /* BetCoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89A522A297DEA31009DF722 /* BetCoinView.swift */; };
 		C8C38AF129900DE4007E7CEC /* PopUpImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C38AF029900DE4007E7CEC /* PopUpImage.swift */; };
 		C8C38AF52990242A007E7CEC /* PlaceBetImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C38AF42990242A007E7CEC /* PlaceBetImage.swift */; };
+		C8C38AFE29906D3A007E7CEC /* JackpotImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C38AFD29906D39007E7CEC /* JackpotImage.swift */; };
 		C8CA1060297CCD4100F2DA82 /* iosSlotMachineGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CA105F297CCD4100F2DA82 /* iosSlotMachineGameApp.swift */; };
 		C8CA1062297CCD4100F2DA82 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CA1061297CCD4100F2DA82 /* ContentView.swift */; };
 		C8CA1064297CCD4300F2DA82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8CA1063297CCD4300F2DA82 /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		C89A522A297DEA31009DF722 /* BetCoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetCoinView.swift; sourceTree = "<group>"; };
 		C8C38AF029900DE4007E7CEC /* PopUpImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpImage.swift; sourceTree = "<group>"; };
 		C8C38AF42990242A007E7CEC /* PlaceBetImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceBetImage.swift; sourceTree = "<group>"; };
+		C8C38AFD29906D39007E7CEC /* JackpotImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JackpotImage.swift; sourceTree = "<group>"; };
 		C8CA105C297CCD4100F2DA82 /* iosSlotMachineGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosSlotMachineGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8CA105F297CCD4100F2DA82 /* iosSlotMachineGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosSlotMachineGameApp.swift; sourceTree = "<group>"; };
 		C8CA1061297CCD4100F2DA82 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				C89A522A297DEA31009DF722 /* BetCoinView.swift */,
 				C8C38AF029900DE4007E7CEC /* PopUpImage.swift */,
 				C8C38AF42990242A007E7CEC /* PlaceBetImage.swift */,
+				C8C38AFD29906D39007E7CEC /* JackpotImage.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				C8CA107C297CDA6E00F2DA82 /* Extensions.swift in Sources */,
 				C8C38AF129900DE4007E7CEC /* PopUpImage.swift in Sources */,
 				C8CA107A297CD51900F2DA82 /* Modifiers.swift in Sources */,
+				C8C38AFE29906D3A007E7CEC /* JackpotImage.swift in Sources */,
 				C8CA1078297CD41200F2DA82 /* gameLogo.swift in Sources */,
 				C8C38AF52990242A007E7CEC /* PlaceBetImage.swift in Sources */,
 				C89A522B297DEA31009DF722 /* BetCoinView.swift in Sources */,
