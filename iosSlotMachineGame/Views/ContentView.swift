@@ -21,13 +21,13 @@ import SwiftUI
 struct ContentView: View {
     
     // Array of images shown in reel
-    let images = ["bell", "cherry", "grape", "coin", "strawberry", "orange", "banana", "seven"]
+    let images = ["bell", "cherry", "grape", "coin", "strawberry", "orange", "banana", "seven", "bar"]
     
     // MARK: - Variables
     // Array of reel images
     @State private var reelImage: Array = [0,1,2]
     //  Number of coins player has
-    @State private var playerCoins: Int = 1000
+    @State private var playerCoins: Int = 20
     // Payer highscore
     // player high score is determined by the amount of coins they have won. So the game starts at 1000 high score the same as the amount of coins but it will increase if the player wins more than 1,000
     @State private var playerHighScore: Int = 1000
@@ -49,34 +49,8 @@ struct ContentView: View {
         reelImage[0] = Int.random(in: 0...images.count - 1)
         reelImage[1] = Int.random(in: 0...images.count - 1)
         reelImage[2] = Int.random(in: 0...images.count - 1)
+    }
         
-        print(reelImage)
-    }
-    
-    // 1 bet amount
-    func betAmout1() {
-        betAmount = 1
-        selecteBetAmout1 = true
-        selecteBetAmout10 = false
-        selecteBetAmout100 = false
-    }
-    
-    // 10 bet amount
-    func betAmout10() {
-        betAmount = 10
-        selecteBetAmout10 = true
-        selecteBetAmout1 = false
-        selecteBetAmout100 = false
-    }
-    
-    // 100 bet amount
-    func betAmout100() {
-        betAmount = 100
-        selecteBetAmout100 = true
-        selecteBetAmout1 = false
-        selecteBetAmout10 = false
-    }
-    
     // MARK: - check player winnings
     func playerWinning() {
         var counts: [Int: Int] = [:]
@@ -91,86 +65,134 @@ struct ContentView: View {
             for (key, value) in counts {
                 if key == 0 {
                     if value == 2 {
-                        wonBet(val: 3)
+                        wonBet(val: 100)
                         highScore()
                     } else if value == 3 {
-                        wonBet(val: 50)
+                        wonBet(val: 150)
                         highScore()
                     }
                 } else if key == 1 {
                     if value == 2 {
-                        wonBet(val: 2)
+                        wonBet(val: 80)
                         highScore()
                     } else if value == 3 {
-                        wonBet(val: 10)
+                        wonBet(val: 120)
                         highScore()
                     }
                 } else if key == 2 {
                     if value == 2 {
-                        wonBet(val: 2)
+                        wonBet(val: 70)
                         highScore()
                     } else if value == 3 {
-                        wonBet(val: 15)
+                        wonBet(val: 105)
                         highScore()
                     }
                 } else if key == 3 {
                     if value == 2 {
-                        wonBet(val: 3)
+                        wonBet(val: 90)
                         highScore()
                     } else if value == 3 {
-                        wonBet(val: 40)
+                        wonBet(val: 135)
                         highScore()
                     }
                 } else if key == 4 {
                     if value == 2 {
-                        wonBet(val: 2)
+                        wonBet(val: 60)
                         highScore()
                     } else if value == 3 {
-                        wonBet(val: 20)
+                        wonBet(val: 90)
                         highScore()
                     }
                 } else if key == 5 {
                     if value == 2 {
-                        wonBet(val: 2)
+                        wonBet(val: 50)
                         highScore()
                     } else if value == 3 {
-                        wonBet(val: 25)
+                        wonBet(val: 80)
                         highScore()
                     }
                 } else if key == 6 {
                     if value == 2 {
-                        wonBet(val: 2)
+                        wonBet(val: 40)
                         highScore()
                     } else if value == 3 {
-                        wonBet(val: 30)
+                        wonBet(val: 60)
                         highScore()
                     }
                 } else if key == 7 {
                     if value == 2 {
-                        wonBet(val: 10)
+                        wonBet(val: 60)
                         highScore()
                     } else if value == 3 {
                         jackpot()
-                        wonBet(val: 60)
+                        wonBet(val: 180)
                         highScore()
+                    }
+                } else if key == 8 {
+                    if value == 2 {
+                        playerLoss()
+                    } else if value == 3 {
+                        if playerCoins > 500 {
+                            playerCoins -= 500
+                        } else {
+                            playerLoss()
+                        }
                     }
                 }
             }
         }
     }
     
+    // 1 bet amount
+    func betAmout1() {
+        betAmount = 1
+        selecteBetAmout1 = true
+        selecteBetAmout10 = false
+        selecteBetAmout100 = false
+        
+        if playerCoins < 1 {
+            selecteBetAmout1 = false
+            popUp = true
+        }
+    }
+    
+    // 10 bet amount
+    func betAmout10() {
+        betAmount = 10
+        selecteBetAmout10 = true
+        selecteBetAmout1 = false
+        selecteBetAmout100 = false
+        
+        if playerCoins < 10 {
+            selecteBetAmout10 = false
+            popUp = true
+        }
+    }
+    
+    // 100 bet amount
+    func betAmout100() {
+        betAmount = 100
+        selecteBetAmout100 = true
+        selecteBetAmout1 = false
+        selecteBetAmout10 = false
+        
+        if playerCoins < 100 {
+            selecteBetAmout100 = false
+            popUp = true
+        }
+    }
+    
     // player win
     func wonBet(val: Int) {
         // Calculate what player has won by multiplying the bet amount
-        playerCoins += betAmount * val
-        
+        playerCoins += betAmount + val
         print(playerCoins)
     }
     
     // Player jackpot
     func jackpot() {
-            popUp = true
-            playerCoins += betAmount + 1000
+        popUp = true
+        playerCoins += betAmount + 1000
         print("!!!!!!Jackpot")
     }
     
@@ -198,6 +220,26 @@ struct ContentView: View {
         }
     }
     
+    func checkPlayerAmount() {
+        if playerCoins < 100 {
+            selecteBetAmout100 = false
+        } else if playerCoins < 10 {
+            selecteBetAmout10 = false
+        } else if playerCoins < 1 {
+            selecteBetAmout1 = false
+            gameOver()
+        }
+    }
+    
+    func checkPlayerAmount2() {
+        if playerCoins < 10 {
+            selecteBetAmout10 = false
+        } else if playerCoins < 1 {
+            selecteBetAmout1 = false
+            gameOver()
+        }
+    }
+
     // reset the game
     func resetGame() {
         playerCoins = 1000
@@ -218,7 +260,6 @@ struct ContentView: View {
             VStack(alignment: .center, spacing: 5) {
                 // MARK: - Game logo
                 gameLogo()
-                
                 // MARK: - Game coins and jackpot
                 HStack {
                     // MARK: - Score Label
@@ -228,7 +269,6 @@ struct ContentView: View {
                         Text("\(playerCoins)")
                             .playerScore()
                             .modifier(BetAmountShadow())
-                        
                     }
                     .padding(.leading)
                     Spacer()
@@ -240,7 +280,6 @@ struct ContentView: View {
                             .modifier(BetAmountShadow())
                         Text("Your\nHighScore".uppercased())
                             .playerScoreLabel()
-                        //                            .multilineTextAlignment(.trailing)
                     }
                     .padding(.trailing)
                 }
@@ -284,7 +323,6 @@ struct ContentView: View {
                             if selecteBetAmout1 == false && selecteBetAmout10 == false && selecteBetAmout100 == false {
                                 // return modalToPlaceBet
                                 popUp = true
-                                
                             } else {
                                 spinReels()
                             }
@@ -293,6 +331,10 @@ struct ContentView: View {
                             
                             // Game is over
                             gameOver()
+                            
+                            // Chekcks the amount of coins the player has
+                            checkPlayerAmount()
+                            checkPlayerAmount2()
                         }){
                             Image("spinner")
                                 .renderingMode(.original)
@@ -313,7 +355,6 @@ struct ContentView: View {
                     HStack {
                         Button(action: {
                             betAmout1()
-                            print("$1 button pressed")
                         }){
                             Text("1")
                                 .betAmountLabel()
@@ -334,7 +375,6 @@ struct ContentView: View {
                     HStack {
                         Button(action: {
                             betAmout10()
-                            print("$10 button pressed")
                         }){
                             Text("10")
                                 .betAmountLabel()
@@ -355,7 +395,6 @@ struct ContentView: View {
                     HStack {
                         Button(action: {
                             betAmout100()
-                            print("$100 button pressed")
                         }){
                             Text("100")
                                 .betAmountLabel()
@@ -376,7 +415,7 @@ struct ContentView: View {
                 }
                 
                 Spacer()
-                .scaledToFit()
+                    .scaledToFit()
             }
             // MARK: - Overlay Cancel/Quit Buttons
             .overlay(
@@ -430,7 +469,6 @@ struct ContentView: View {
                                 Text("The House Always Wins!!!\n Better Luck Next Time 😉")
                                     .popUpMessage()
                                     .modifier(PopUpMessageModifier())
-                                
                                 // Button
                                 Button(action: {
                                     popUp = false
@@ -475,7 +513,7 @@ struct ContentView: View {
                             Spacer()
                         }.modifier(PopUpView())
                         
-                    // Prompt for player to choose bet amount
+                        // Prompt for player to choose bet amount
                     } else {
                         VStack {
                             Text("Choose \n Bet Amount")
