@@ -49,13 +49,26 @@ struct ContentView: View {
     @State private var popUp = false
     
     // Menu pop up
-    @State private var menuPop = true
+    @State private var menuPop = false
+    
+    @State private var quitApp = false
+    
+//    @Environment(\.dismiss) var dismiss
+    @Environment(\.presentationMode) var presentationMode
+    
+    @State var showAlert = false
     
     // MARK: - Methods
- 
+    private func terminateApp() {
+////            NSApplication.shared.terminate(self)
+//        NSApp.terminate(self)
+        }
     
     // MARK: - Body
     var body: some View {
+        .onDisappear {
+                            terminateApp()
+                        }
         ZStack {
             // Background Gradient
             LinearGradient(colors: [Color("black"), Color("gold")], startPoint: .top,
@@ -228,7 +241,7 @@ struct ContentView: View {
             .frame(maxWidth: 720)
             .overlay(
                 Button(action:{
-                    showingInfoView = true
+                    menuPop = true
                 }){
                     Image(systemName: "questionmark.circle")
                 }
@@ -263,40 +276,34 @@ struct ContentView: View {
 //                                .modifier(PopUpMessageModifier())
                             // Button
                             Button(action: {
-                                popUp = false
-                                slotBrain.selecteBetAmout1 = false
-                                slotBrain.selecteBetAmout10 = false
-                                slotBrain.selecteBetAmout100 = false
-                                // Reset coins
-                                slotBrain.playerCoins = 1000
+                                showingInfoView = true
                             }) {
-                                Text("New Game".uppercased())
+                                Text("Rewards".uppercased())
                                     .popUpMessage()
                                     .modifier(PopUpButton())
                             }
                             Button(action: {
-                                popUp = false
-                                slotBrain.selecteBetAmout1 = false
-                                slotBrain.selecteBetAmout10 = false
-                                slotBrain.selecteBetAmout100 = false
-                                // Reset coins
-                                slotBrain.playerCoins = 1000
+                                menuPop = false
                             }) {
-                                Text("New Game".uppercased())
+                                Text("Resume".uppercased())
                                     .popUpMessage()
                                     .modifier(PopUpButton())
                             }
                             Button(action: {
-                                popUp = false
-                                slotBrain.selecteBetAmout1 = false
-                                slotBrain.selecteBetAmout10 = false
-                                slotBrain.selecteBetAmout100 = false
-                                // Reset coins
-                                slotBrain.playerCoins = 1000
-                            }) {
-                                Text("New Game".uppercased())
+                                showAlert = true
+                            })
+                            {
+                                Text("Quit".uppercased())
                                     .popUpMessage()
                                     .modifier(PopUpButton())
+                            }
+                            .alert("Do you want to quit?", isPresented: $showAlert) {
+                                Button("Yes", role: .destructive) {
+                                    exit(0)
+                                }
+                                Button("No", role: .cancel) {
+//                                    menuPop = false
+                                }
                             }
                         }
                         Spacer()
@@ -428,6 +435,23 @@ struct ContentView: View {
             .padding(.trailing)
         }
     }
+    
+//    var alertbody: some View {
+//      Button(action: {
+//        self.showAlert = true
+//      }) {
+//        Text("Show Alert")
+//      }
+//      .alert(isPresented: $showAlert) {
+//          Alert(title: Text("Title"), message: Text("Message..."),
+//              primaryButton: .default (Text("OK")) {
+//                print("OK button tapped")
+//              },
+//              secondaryButton: .cancel()
+//          )
+//      }
+//    }
+    
     // MARK: - Preview
     struct ContentView_Previews: PreviewProvider {
         static let slotBrain = SlotBrain()
