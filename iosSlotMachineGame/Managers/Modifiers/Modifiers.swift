@@ -153,6 +153,18 @@ struct PopUpView: ViewModifier {
     }
 }
 
+// MARK: - Pop Up Message Modifier
+struct RewardImages: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .scaledToFit()
+            .layoutPriority(1)
+            .frame(minWidth: 20, idealWidth: 50, maxWidth: 60, minHeight: 20, idealHeight: 50, maxHeight: 60, alignment: .center)
+            .modifier(Shadow())
+    }
+}
+    
+
 
    
 

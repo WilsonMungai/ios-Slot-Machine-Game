@@ -44,4 +44,10 @@ extension Text {
             .fontWeight(.semibold)
             .font(.system(.title, design: .rounded))
     }
+    
+    func rewardDetails() -> Text {
+        self.font(.system(size: 20, weight: .bold, design: .rounded))
+            .fontWeight(.bold)
+            
+    }
 }
