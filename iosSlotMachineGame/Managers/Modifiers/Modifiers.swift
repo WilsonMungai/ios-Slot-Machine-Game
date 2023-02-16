@@ -150,6 +150,8 @@ struct PopUpView: ViewModifier {
                 .background(Color("gold"))
                 .cornerRadius(20)
                 .shadow(color: Color("transparent"), radius: 6, x: 0, y: 8)
+                
+                
     }
 }
 

@@ -17,15 +17,15 @@ struct Menu: View {
             Form{
                 Section(header: Text("Rewards")
                     .font(.system(size: 20, weight: .bold, design: .rounded))) {
-                        RewardRowView(rewardImage: "banana", rewardPoints: "Banana \n 1x 20pts")
-                        RewardRowView(rewardImage: "orange", rewardPoints: "Orange \n 1x 25pts")
-                        RewardRowView(rewardImage: "strawberry", rewardPoints: "Strawberry \n 1x 30pts")
-                        RewardRowView(rewardImage: "grape", rewardPoints: "Grape \n 1x 35pts")
-                        RewardRowView(rewardImage: "cherry", rewardPoints: "Cherry \n 1x 40pts")
-                        RewardRowView(rewardImage: "coin", rewardPoints: "Coin \n 1x 45pts")
-                        RewardRowView(rewardImage: "bell", rewardPoints: "Bell \n 1x 50pts")
-                        RewardRowView(rewardImage: "seven", rewardPoints: "Seven \n 1x 60pts")
-                        RewardRowView(rewardImage: "bar", rewardPoints: "Bar \n 1x -50pts")
+                        RewardRowView(rewardImage: "banana", rewardPoints: "Banana \n +20pts")
+                        RewardRowView(rewardImage: "orange", rewardPoints: "Orange \n +25pts")
+                        RewardRowView(rewardImage: "strawberry", rewardPoints: "Strawberry \n +30pts")
+                        RewardRowView(rewardImage: "grape", rewardPoints: "Grape \n +35pts")
+                        RewardRowView(rewardImage: "cherry", rewardPoints: "Cherry \n +40pts")
+                        RewardRowView(rewardImage: "coin", rewardPoints: "Coin \n +45pts")
+                        RewardRowView(rewardImage: "bell", rewardPoints: "Bell \n +50pts")
+                        RewardRowView(rewardImage: "seven", rewardPoints: "Seven \n +60pts")
+                        RewardRowView(rewardImage: "bar", rewardPoints: "Bar \n -50pts")
                     }
             }
         }

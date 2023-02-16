@@ -51,24 +51,18 @@ struct ContentView: View {
     // Menu pop up
     @State private var menuPop = false
     
-    @State private var quitApp = false
-    
 //    @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode
     
     @State var showAlert = false
     
-    // MARK: - Methods
-    private func terminateApp() {
-////            NSApplication.shared.terminate(self)
-//        NSApp.terminate(self)
-        }
+    @State private var animatingSymbol = false
     
+    @State private var animatingModal = false
+    
+    // MARK: - Methods
     // MARK: - Body
     var body: some View {
-        .onDisappear {
-                            terminateApp()
-                        }
         ZStack {
             // Background Gradient
             LinearGradient(colors: [Color("black"), Color("gold")], startPoint: .top,
@@ -255,6 +249,7 @@ struct ContentView: View {
             // Blur background when pop up appears
             .blur(radius: $popUp.wrappedValue ? 3 : 0, opaque: false)
             .blur(radius: $menuPop.wrappedValue ? 3 : 0, opaque: false)
+        
             
             
             if $menuPop.wrappedValue {
@@ -284,6 +279,7 @@ struct ContentView: View {
                             }
                             Button(action: {
                                 menuPop = false
+                                animatingModal = false
                             }) {
                                 Text("Resume".uppercased())
                                     .popUpMessage()
@@ -291,8 +287,7 @@ struct ContentView: View {
                             }
                             Button(action: {
                                 showAlert = true
-                            })
-                            {
+                            }) {
                                 Text("Quit".uppercased())
                                     .popUpMessage()
                                     .modifier(PopUpButton())
@@ -301,14 +296,18 @@ struct ContentView: View {
                                 Button("Yes", role: .destructive) {
                                     exit(0)
                                 }
-                                Button("No", role: .cancel) {
-//                                    menuPop = false
-                                }
+                                Button("No", role: .cancel) {}
                             }
                         }
                         Spacer()
-                    }.modifier(PopUpView())
-                    
+                    }
+                    .opacity($animatingModal.wrappedValue ? 1 : 0)
+                    .offset(y: $animatingModal.wrappedValue ? 0 : -100)
+                    .animation(Animation.spring(response: 0.6, dampingFraction: 1.0, blendDuration: 1.0))
+                    .onAppear {
+                        self.animatingModal = true
+                    }
+                    .modifier(PopUpView())
                 }
             }
             

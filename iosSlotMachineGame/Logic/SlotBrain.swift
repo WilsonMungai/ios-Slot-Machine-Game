@@ -14,10 +14,10 @@ class SlotBrain: ObservableObject {
     // Array of reel images
     var reelImage: Array = [0,1,2]
     //  Number of coins player has
-    var playerCoins: Int = 10
+    var playerCoins: Int = 1000
     // Payer highscore
     // player high score is determined by the amount of coins they have won. So the game starts at 1000 high score the same as the amount of coins but it will increase if the player wins more than 1,000
-    var playerHighScore: Int = 1000
+    var playerHighScore: Int = UserDefaults.standard.integer(forKey: "HighScore")
     // Player's bet amout
     // Game starts off at bet amount 10
     var betAmount: Int = 0
@@ -35,6 +35,10 @@ class SlotBrain: ObservableObject {
         reelImage[0] = Int.random(in: 0...images.count - 1)
         reelImage[1] = Int.random(in: 0...images.count - 1)
         reelImage[2] = Int.random(in: 0...images.count - 1)
+        
+//        SoundManager.instance.playSound(sound: .spinner)
+        
+//        playSound(sound: "spin", type: "mp3")
     }
     
     func playerWinning() {
@@ -139,6 +143,7 @@ class SlotBrain: ObservableObject {
     
     // Player jackpot
     func jackpot() {
+        SoundManager.instance.playSound(sound: .jackpot)
         popUp = true
         playerCoins += betAmount + 1000
         print("!!!!!!Jackpot")
@@ -159,14 +164,18 @@ class SlotBrain: ObservableObject {
     
     // player high score
     func highScore() {
+        SoundManager.instance.playSound(sound: .highscore)
         if playerCoins > playerHighScore {
             playerHighScore = playerCoins
         }
+        UserDefaults.standard.set(playerHighScore, forKey: "HighScore")
+//        playSound(sound: "high-score", type: "mp3")
         self.objectWillChange.send()
     }
     
     // 1 bet amount
     func betAmout1() {
+        SoundManager.instance.playSound(sound: .chips)
         betAmount = 1
         selecteBetAmout1 = true
         selecteBetAmout10 = false
@@ -181,6 +190,7 @@ class SlotBrain: ObservableObject {
     
     // 10 bet amount
     func betAmout10() {
+        SoundManager.instance.playSound(sound: .chips)
         betAmount = 10
         selecteBetAmout10 = true
         selecteBetAmout1 = false
@@ -195,6 +205,7 @@ class SlotBrain: ObservableObject {
     
     // 100 bet amount
     func betAmout100() {
+        SoundManager.instance.playSound(sound: .chips)
         betAmount = 100
         selecteBetAmout100 = true
         selecteBetAmout1 = false
@@ -208,7 +219,7 @@ class SlotBrain: ObservableObject {
     }
     // when the player coins reach zero
     func gameOver() {
-        if playerCoins == 0 {
+        if playerCoins <= 0 {
             popUp = true
         }
         print("Game over function called")
@@ -238,6 +249,9 @@ class SlotBrain: ObservableObject {
 
     // reset the game
     func resetGame() {
+        SoundManager.instance.playSound(sound: .reset)
+//        UserDefaults.standard.set(0, forKey: "HighScore")
+//        playerHighScore = 0
         playerCoins = 1000
         selecteBetAmout1 = false
         selecteBetAmout10 = false
