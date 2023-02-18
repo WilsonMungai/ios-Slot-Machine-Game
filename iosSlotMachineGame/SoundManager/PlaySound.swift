@@ -14,12 +14,13 @@ class SoundManager {
     static let instance = SoundManager()
     
     enum SoundOptions: String {
-        case spinner = "spin"
-        case menu = "menu"
         case chips = "chips"
         case reset = "reset"
         case jackpot = "tada"
         case highscore = "highsocre"
+        case spin = "spin"
+        case menu = "menu"
+        case gameOver = "gameover"
     }
     
     var player: AVAudioPlayer?

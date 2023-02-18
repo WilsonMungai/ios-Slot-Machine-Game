@@ -10,57 +10,34 @@
  
  This is a simple slot machine game that has three reel images, a spin button that changes the images in the reels. The user can see the amount of coins they have in the player coins label, and also see the jackpot amount in  the jackpot label. There are different bet amounts which the user can select. The player has the permission to reset the game which will reset everything in the game. There is also an option to quit the game.
  
- Version 2
+ Version 3
  
- Last modified: 5/February/2023
+ Last modified: 18/February/2023
  
  */
 
 import SwiftUI
 
 struct ContentView: View {
-    
-    @State private var showingInfoView = false
-    
-    // Array of images shown in reel
-//    let images = ["bell", "cherry", "grape", "coin", "strawberry", "orange", "banana", "seven", "bar"]
-    
-//    @StateObject var dice = DiceSet()
+    // Slot functions
     @StateObject var slotBrain = SlotBrain()
-    
-    // MARK: - Variables
-    // Array of reel images
-//    @State private var reelImage: Array = [0,1,2]
-    //  Number of coins player has
-//    @State private var playerCoins: Int = 1000
-//    // Payer highscore
-//    // player high score is determined by the amount of coins they have won. So the game starts at 1000 high score the same as the amount of coins but it will increase if the player wins more than 1,000
-//    @State private var playerHighScore: Int = 1000
-//    // Player's bet amout
-//    // Game starts off at bet amount 10
-//    @State private var betAmount: Int = 0
-//
-//    // Get the selected bet amount
-//    @State private var selecteBetAmout1: Bool = false
-//    @State private var selecteBetAmout10: Bool = false
-//    @State private var selecteBetAmout100: Bool = false
-    
     // Pop up
     @State private var popUp = false
-    
     // Menu pop up
     @State private var menuPop = false
-    
-//    @Environment(\.dismiss) var dismiss
-    @Environment(\.presentationMode) var presentationMode
-    
+    // Show info screen
+    @State private var showingInfoView = false
+    // Quit alert
     @State var showAlert = false
-    
+    // Spinner animation
+    @State private var isAnimated = false
+    // Reel animation
     @State private var animatingSymbol = false
-    
+    // Menu popup animation
     @State private var animatingModal = false
+    // Animation duration
+    let timing = 1.0
     
-    // MARK: - Methods
     // MARK: - Body
     var body: some View {
         ZStack {
@@ -73,7 +50,6 @@ struct ContentView: View {
             VStack(alignment: .center, spacing: 5) {
                 // MARK: - Game logo
                 gameLogo()
-                // MARK: - Game coins and jackpot
                 // Labels views
                 labelsContentLayer
                 // MARK: - Slot Machine
@@ -85,8 +61,13 @@ struct ContentView: View {
                         Image(slotBrain.images[slotBrain.reelImage[0]])
                             .resizable()
                             .modifier(ImageModifier())
+                            .opacity(animatingSymbol ? 1 : 0)
+                            .offset(y: animatingSymbol ? 0 : -50)
+                            .animation(Animation.easeOut(duration: Double.random(in: 0.5...0.7)), value: animatingSymbol)
+                            .onAppear(perform: {
+                                self.animatingSymbol.toggle()
+                            })
                     }
-                    
                     HStack() {
                         // MARK: - Reel 2
                         ZStack {
@@ -95,6 +76,12 @@ struct ContentView: View {
                             Image(slotBrain.images[slotBrain.reelImage[1]])
                                 .resizable()
                                 .modifier(ImageModifier())
+                                .opacity(animatingSymbol ? 1 : 0)
+                                .offset(y: animatingSymbol ? 0 : -50)
+                                .animation(Animation.easeOut(duration: Double.random(in: 0.7...0.9)), value: animatingSymbol)
+                                .onAppear(perform: {
+                                    self.animatingSymbol.toggle()
+                                })
                         }
                         // MARK: - Reel 3
                         ZStack {
@@ -104,6 +91,12 @@ struct ContentView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .modifier(ImageModifier())
+                                .opacity(animatingSymbol ? 1 : 0)
+                                .offset(y: animatingSymbol ? 0 : -50)
+                                .animation(Animation.easeOut(duration: Double.random(in: 0.9...1.1)), value: animatingSymbol)
+                                .onAppear(perform: {
+                                    self.animatingSymbol.toggle()
+                                })
                         }
                     }
                     .frame(maxWidth: 500)
@@ -111,6 +104,19 @@ struct ContentView: View {
                     // MARK: - Spinner Button
                     HStack {
                         Button(action: {
+                            withAnimation(Animation.linear(duration: timing)) {
+                                // Disable animation when no button is selected
+                                if slotBrain.selecteBetAmout1 == true || slotBrain.selecteBetAmout10 == true || slotBrain.selecteBetAmout100 == true {
+                                    isAnimated.toggle()
+                                }
+                                else {
+                                    isAnimated = false
+                                }
+                            }
+                            // Set default animation to false
+                            withAnimation {
+                                self.animatingSymbol = false
+                            }
                             // Spin the reels
                             if slotBrain.selecteBetAmout1 == false && slotBrain.selecteBetAmout10 == false && slotBrain.selecteBetAmout100 == false {
                                 // return modalToPlaceBet
@@ -118,15 +124,15 @@ struct ContentView: View {
                             } else {
                                 slotBrain.spinReels()
                             }
+                            // trigger animation after changing symbols
+                            withAnimation {
+                                self.animatingSymbol = true
+                            }
                             // Update when player wins
-//                            playerWinning()
                             slotBrain.playerWinning()
                             // Game is over
                             slotBrain.gameOver()
                             
-                            // Chekcks the amount of coins the player has
-//                            checkPlayerAmount()
-//                            checkPlayerAmount2()
                             slotBrain.checkPlayerAmount()
                             slotBrain.checkPlayerAmount2()
                             slotBrain.checkPlayerAmount3()
@@ -135,6 +141,7 @@ struct ContentView: View {
                                 .renderingMode(.original)
                                 .resizable()
                                 .modifier(SpinnerModifier())
+                                .rotationEffect(Angle(degrees: isAnimated ? 360 : 0))
                         }
                         // disable button when pop up appears
                         .disabled(popUp == true)
@@ -145,11 +152,10 @@ struct ContentView: View {
                 Spacer ()
                 
                 // MARK: - Bet Amount Buttons
-                // 1 dollar bet amount
+                // 1 bet amount
                 HStack {
                     HStack {
                         Button(action: {
-//                        betAmout1()
                             slotBrain.betAmout1()
                         }){
                             Text("1")
@@ -168,6 +174,7 @@ struct ContentView: View {
                         .disabled(popUp == true)
                     }
                     
+                    // 10 bet amount
                     HStack {
                         Button(action: {
                             slotBrain.betAmout10()
@@ -188,9 +195,9 @@ struct ContentView: View {
                         .disabled(popUp == true)
                     }
                     
+                    // 100 bet amount
                     HStack {
                         Button(action: {
-//                            betAmout100()
                             slotBrain.betAmout100()
                         }){
                             Text("100")
@@ -210,20 +217,15 @@ struct ContentView: View {
                         .disabled(popUp == true)
                     }
                 }
-                
-                Spacer()
-                    .scaledToFit()
+                .scaledToFit()
             }
             // Show Info screen
-            .fullScreenCover(isPresented: $showingInfoView) {
-                Menu()
-            }
+            .fullScreenCover(isPresented: $showingInfoView) { Menu() }
+            
             // MARK: - Overlay Cancel/Quit Buttons
             .overlay(
                 Button(action:{
-//                    resetGame()
                     slotBrain.resetGame()
-                    print("Reset game button pressed")
                 }){
                     Image(systemName: "arrow.counterclockwise")
                 }
@@ -235,6 +237,7 @@ struct ContentView: View {
             .frame(maxWidth: 720)
             .overlay(
                 Button(action:{
+                    SoundManager.instance.playSound(sound: .menu)
                     menuPop = true
                 }){
                     Image(systemName: "questionmark.circle")
@@ -249,167 +252,17 @@ struct ContentView: View {
             // Blur background when pop up appears
             .blur(radius: $popUp.wrappedValue ? 3 : 0, opaque: false)
             .blur(radius: $menuPop.wrappedValue ? 3 : 0, opaque: false)
-        
             
+            // MARK: - Menu Pop Up
+            if $menuPop.wrappedValue { menuPopUp }
             
-            if $menuPop.wrappedValue {
-                ZStack {
-                    Color("transparent")
-                        .edgesIgnoringSafeArea(.all)
-                    VStack {
-                        Text("Menu")
-                            .betAmountLabel()
-                        .modifier(GameOverLabel())
-                        
-                        Spacer()
-                        
-                        VStack(alignment: .center, spacing: 16) {
-                            // Image
-                            gameLogo()
-//                            Text("The House Always Wins!!!\n Better Luck Next Time 😉")
-//                                .popUpMessage()
-//                                .modifier(PopUpMessageModifier())
-                            // Button
-                            Button(action: {
-                                showingInfoView = true
-                            }) {
-                                Text("Rewards".uppercased())
-                                    .popUpMessage()
-                                    .modifier(PopUpButton())
-                            }
-                            Button(action: {
-                                menuPop = false
-                                animatingModal = false
-                            }) {
-                                Text("Resume".uppercased())
-                                    .popUpMessage()
-                                    .modifier(PopUpButton())
-                            }
-                            Button(action: {
-                                showAlert = true
-                            }) {
-                                Text("Quit".uppercased())
-                                    .popUpMessage()
-                                    .modifier(PopUpButton())
-                            }
-                            .alert("Do you want to quit?", isPresented: $showAlert) {
-                                Button("Yes", role: .destructive) {
-                                    exit(0)
-                                }
-                                Button("No", role: .cancel) {}
-                            }
-                        }
-                        Spacer()
-                    }
-                    .opacity($animatingModal.wrappedValue ? 1 : 0)
-                    .offset(y: $animatingModal.wrappedValue ? 0 : -100)
-                    .animation(Animation.spring(response: 0.6, dampingFraction: 1.0, blendDuration: 1.0))
-                    .onAppear {
-                        self.animatingModal = true
-                    }
-                    .modifier(PopUpView())
-                }
-            }
-            
-            // MARK: - Pop Up
-            if $popUp.wrappedValue {
-                ZStack {
-                    Color("transparent")
-                        .edgesIgnoringSafeArea(.all)
-                    
-                    // Model  view
-                    // Game Over pop up
-                    if slotBrain.playerCoins == 0 {
-                        VStack {
-                            Text("Game Over")
-                                .betAmountLabel()
-                                .modifier(GameOverLabel())
-                            
-                            Spacer()
-                            
-                            VStack(alignment: .center, spacing: 16) {
-                                // Image
-                                PopUpImage()
-                                Text("The House Always Wins!!!\n Better Luck Next Time 😉")
-                                    .popUpMessage()
-                                    .modifier(PopUpMessageModifier())
-                                // Button
-                                Button(action: {
-                                    popUp = false
-                                    slotBrain.selecteBetAmout1 = false
-                                    slotBrain.selecteBetAmout10 = false
-                                    slotBrain.selecteBetAmout100 = false
-                                    // Reset coins
-                                    slotBrain.playerCoins = 1000
-                                }) {
-                                    Text("New Game".uppercased())
-                                        .popUpMessage()
-                                        .modifier(PopUpButton())
-                                }
-                            }
-                            Spacer()
-                        }.modifier(PopUpView())
-                        
-                        // JackPot Popup
-                    } else if slotBrain.reelImage == [7,7,7] {
-                        VStack {
-                            Text("Congratulations!!!")
-                                .betAmountLabel()
-                                .modifier(GameOverLabel())
-                            
-                            Spacer()
-                            
-                            VStack(alignment: .center, spacing: 16) {
-                                // Image
-                                JackpotImage()
-                                Text("Winner, winner chicken dinner!!!")
-                                    .popUpMessage()
-                                    .modifier(PopUpMessageModifier())
-                                // Button
-                                Button(action: {
-                                    popUp = false
-                                }) {
-                                    Text("Continue Winning".uppercased())
-                                        .popUpMessage()
-                                        .modifier(PopUpButton())
-                                }
-                            }
-                            Spacer()
-                        }.modifier(PopUpView())
-                        
-                        // Prompt for player to choose bet amount
-                    } else {
-                        VStack {
-                            Text("Choose \n Bet Amount")
-                                .betAmountLabel()
-                                .modifier(GameOverLabel())
-                            
-                            Spacer()
-                            
-                            VStack(alignment: .center, spacing: 16) {
-                                // Image
-                                PlaceBetImage()
-                                Text("Don't Be Afraid To Place Your Bet")
-                                    .popUpMessage()
-                                    .modifier(PopUpMessageModifier())
-                                
-                                // Button
-                                Button(action: {
-                                    popUp = false
-                                }) {
-                                    Text("Select Amount".uppercased())
-                                        .popUpMessage()
-                                        .modifier(PopUpButton())
-                                }
-                            }
-                            Spacer()
-                        }.modifier(PopUpView())
-                    }
-                }
-            }
+            // MARK: - In Game Pop Ups
+            if $popUp.wrappedValue { gamePopUps }
         }
     }
     
+    // MARK: - Views
+    // Coins & HighScore labels
     var labelsContentLayer: some View {
         HStack {
             // MARK: - Score Label
@@ -435,22 +288,160 @@ struct ContentView: View {
         }
     }
     
-//    var alertbody: some View {
-//      Button(action: {
-//        self.showAlert = true
-//      }) {
-//        Text("Show Alert")
-//      }
-//      .alert(isPresented: $showAlert) {
-//          Alert(title: Text("Title"), message: Text("Message..."),
-//              primaryButton: .default (Text("OK")) {
-//                print("OK button tapped")
-//              },
-//              secondaryButton: .cancel()
-//          )
-//      }
-//    }
+    // Menu Pop up view
+    var menuPopUp: some View {
+        ZStack {
+            Color("transparent")
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                Text("Menu")
+                    .betAmountLabel()
+                    .modifier(GameOverLabel())
+                
+                Spacer()
+                
+                VStack(alignment: .center, spacing: 16) {
+                    // Image
+                    gameLogo()
+                    // Button
+                    Button(action: {
+                        showingInfoView = true
+                    }) {
+                        Text("Rewards".uppercased())
+                            .popUpMessage()
+                            .modifier(PopUpButton())
+                    }
+                    Button(action: {
+                        menuPop = false
+                        animatingModal = false
+                        SoundManager.instance.playSound(sound: .menu)
+                    }) {
+                        Text("Resume".uppercased())
+                            .popUpMessage()
+                            .modifier(PopUpButton())
+                    }
+                    Button(action: {
+                        showAlert = true
+                    }) {
+                        Text("Quit".uppercased())
+                            .popUpMessage()
+                            .modifier(PopUpButton())
+                    }
+                    .alert("Do you want to quit?", isPresented: $showAlert) {
+                        Button("Yes", role: .destructive) {
+                            exit(0)
+                        }
+                        Button("No", role: .cancel) {}
+                    }
+                }
+                Spacer()
+            }
+            .opacity($animatingModal.wrappedValue ? 1 : 0)
+            .offset(y: $animatingModal.wrappedValue ? 0 : -100)
+            .animation(Animation.spring(response: 0.8, dampingFraction: 0.75, blendDuration: 1.0), value: animatingModal)
+            .onAppear {
+                self.animatingModal = true
+            }
+            .modifier(PopUpView())
+        }
+    }
     
+    // In game pop ups
+    var gamePopUps: some View {
+        ZStack {
+            Color("transparent")
+                .edgesIgnoringSafeArea(.all)
+            // Model  view
+            // Game Over pop up
+            if slotBrain.playerCoins == 0 {
+                VStack {
+                    Text("Game Over")
+                        .betAmountLabel()
+                        .modifier(GameOverLabel())
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .center, spacing: 16) {
+                        // Image
+                        PopUpImage()
+                        Text("The House Always Wins!!!\n Better Luck Next Time 😉")
+                            .popUpMessage()
+                            .modifier(PopUpMessageModifier())
+                        // Button
+                        Button(action: {
+                            SoundManager.instance.playSound(sound: .reset)
+                            popUp = false
+                            slotBrain.selecteBetAmout1 = false
+                            slotBrain.selecteBetAmout10 = false
+                            slotBrain.selecteBetAmout100 = false
+                            // Reset coins
+                            slotBrain.playerCoins = 1000
+                        }) {
+                            Text("New Game".uppercased())
+                                .popUpMessage()
+                                .modifier(PopUpButton())
+                        }
+                    }
+                    Spacer()
+                }.modifier(PopUpView())
+                
+                // JackPot Popup
+            } else if slotBrain.reelImage == [7,7,7] {
+                VStack {
+                    Text("Congratulations!!!")
+                        .betAmountLabel()
+                        .modifier(GameOverLabel())
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .center, spacing: 16) {
+                        // Image
+                        JackpotImage()
+                        Text("Winner, winner chicken dinner!!!")
+                            .popUpMessage()
+                            .modifier(PopUpMessageModifier())
+                        // Button
+                        Button(action: {
+                            popUp = false
+                        }) {
+                            Text("Continue Winning".uppercased())
+                                .popUpMessage()
+                                .modifier(PopUpButton())
+                        }
+                    }
+                    Spacer()
+                }.modifier(PopUpView())
+                
+                // Prompt for player to choose bet amount
+            } else {
+                VStack {
+                    Text("Choose \n Bet Amount")
+                        .betAmountLabel()
+                        .modifier(GameOverLabel())
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .center, spacing: 16) {
+                        // Image
+                        PlaceBetImage()
+                        Text("Don't Be Afraid To Place Your Bet")
+                            .popUpMessage()
+                            .modifier(PopUpMessageModifier())
+                        
+                        // Button
+                        Button(action: {
+                            popUp = false
+                        }) {
+                            Text("Select Amount".uppercased())
+                                .popUpMessage()
+                                .modifier(PopUpButton())
+                        }
+                    }
+                    Spacer()
+                }.modifier(PopUpView())
+            }
+        }
+    }
     // MARK: - Preview
     struct ContentView_Previews: PreviewProvider {
         static let slotBrain = SlotBrain()
