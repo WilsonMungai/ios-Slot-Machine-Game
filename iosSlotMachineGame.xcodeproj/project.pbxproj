@@ -28,8 +28,9 @@
 		C8D273D629A037CD006F7C8B /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D273D529A037CC006F7C8B /* HapticManager.swift */; };
 		C8D273DA29A06124006F7C8B /* MenuPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D273D929A06124006F7C8B /* MenuPopUp.swift */; };
 		C8D273DE29A06F62006F7C8B /* spin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C8D273DD29A06F62006F7C8B /* spin.mp3 */; };
-		C8D273E029A0706C006F7C8B /* menu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C8D273DF29A0706C006F7C8B /* menu.mp3 */; };
 		C8D273E229A0738E006F7C8B /* gameover.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C8D273E129A0738E006F7C8B /* gameover.mp3 */; };
+		C8D273E429A145F2006F7C8B /* menu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C8D273E329A145F2006F7C8B /* menu.mp3 */; };
+		C8D273E629A18CA1006F7C8B /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D273E529A18CA1006F7C8B /* SplashScreen.swift */; };
 		C8F1BC83299A880200EB3644 /* SlotBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F1BC82299A880200EB3644 /* SlotBrain.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,8 +57,9 @@
 		C8D273D529A037CC006F7C8B /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		C8D273D929A06124006F7C8B /* MenuPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPopUp.swift; sourceTree = "<group>"; };
 		C8D273DD29A06F62006F7C8B /* spin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spin.mp3; sourceTree = "<group>"; };
-		C8D273DF29A0706C006F7C8B /* menu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = menu.mp3; path = ../../../../../../../Desktop/menu.mp3; sourceTree = "<group>"; };
 		C8D273E129A0738E006F7C8B /* gameover.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameover.mp3; sourceTree = "<group>"; };
+		C8D273E329A145F2006F7C8B /* menu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menu.mp3; sourceTree = "<group>"; };
+		C8D273E529A18CA1006F7C8B /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		C8F1BC82299A880200EB3644 /* SlotBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotBrain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,8 +86,8 @@
 		C8A1FBCB299D53D600D9F338 /* sound */ = {
 			isa = PBXGroup;
 			children = (
+				C8D273E329A145F2006F7C8B /* menu.mp3 */,
 				C8D273E129A0738E006F7C8B /* gameover.mp3 */,
-				C8D273DF29A0706C006F7C8B /* menu.mp3 */,
 				C8D273DD29A06F62006F7C8B /* spin.mp3 */,
 				C8A1FBD8299DAEC700D9F338 /* highsocre.mp3 */,
 				C8A1FBD6299DADA800D9F338 /* tada.mp3 */,
@@ -147,6 +149,7 @@
 			children = (
 				C8CA1061297CCD4100F2DA82 /* ContentView.swift */,
 				C83B9EF6299C49AC008EB74C /* Menu.swift */,
+				C8D273E529A18CA1006F7C8B /* SplashScreen.swift */,
 				C8F1BC84299AE03B00EB3644 /* CustomViews */,
 			);
 			path = Views;
@@ -259,7 +262,7 @@
 			files = (
 				C8D273DE29A06F62006F7C8B /* spin.mp3 in Resources */,
 				C8A1FBD7299DADA800D9F338 /* tada.mp3 in Resources */,
-				C8D273E029A0706C006F7C8B /* menu.mp3 in Resources */,
+				C8D273E429A145F2006F7C8B /* menu.mp3 in Resources */,
 				C8A1FBD1299DA61400D9F338 /* chips.mp3 in Resources */,
 				C8A1FBD9299DAEC700D9F338 /* highsocre.mp3 in Resources */,
 				C8CA1067297CCD4300F2DA82 /* Preview Assets.xcassets in Resources */,
@@ -284,6 +287,7 @@
 				C8C38AFE29906D3A007E7CEC /* JackpotImage.swift in Sources */,
 				C8D273DA29A06124006F7C8B /* MenuPopUp.swift in Sources */,
 				C8F1BC83299A880200EB3644 /* SlotBrain.swift in Sources */,
+				C8D273E629A18CA1006F7C8B /* SplashScreen.swift in Sources */,
 				C83B9EF7299C49AC008EB74C /* Menu.swift in Sources */,
 				C8CA1078297CD41200F2DA82 /* gameLogo.swift in Sources */,
 				C8C38AF52990242A007E7CEC /* PlaceBetImage.swift in Sources */,

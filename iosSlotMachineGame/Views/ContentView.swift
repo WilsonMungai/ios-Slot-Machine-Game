@@ -130,12 +130,13 @@ struct ContentView: View {
                             }
                             // Update when player wins
                             slotBrain.playerWinning()
-                            // Game is over
-                            slotBrain.gameOver()
-                            
+                        
                             slotBrain.checkPlayerAmount()
                             slotBrain.checkPlayerAmount2()
                             slotBrain.checkPlayerAmount3()
+                            
+                            // Game is over
+                            slotBrain.gameOver()
                         }){
                             Image("spinner")
                                 .renderingMode(.original)
@@ -145,6 +146,7 @@ struct ContentView: View {
                         }
                         // disable button when pop up appears
                         .disabled(popUp == true)
+//                        .disabled(isAnimated == true)
                     }
                 }
                 .layoutPriority(2)
@@ -212,7 +214,6 @@ struct ContentView: View {
                                     .strokeBorder(lineWidth: 0)
                                     .foregroundColor(Color("transparent")) )
                             BetCoinView()
-                            
                         }
                         .disabled(popUp == true)
                     }

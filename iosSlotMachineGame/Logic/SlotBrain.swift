@@ -16,10 +16,10 @@ class SlotBrain: ObservableObject {
     //  Number of coins player has
     var playerCoins: Int = 10
     // Payer highscore
-    // player high score is determined by the amount of coins they have won. So the game starts at 1000 high score the same as the amount of coins but it will increase if the player wins more than 1,000
+    // player high score is determined by the amount of coins they have won.
     var playerHighScore: Int = UserDefaults.standard.integer(forKey: "HighScore")
     // Player's bet amout
-    // Game starts off at bet amount 10
+    // Game starts off at bet amount 0
     var betAmount: Int = 0
     
     // Get the selected bet amount
