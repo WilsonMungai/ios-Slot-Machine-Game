@@ -12,7 +12,7 @@
  
  Version 3
  
- Last modified: 18/February/2023
+ Last modified: 19/February/2023
  
  */
 
@@ -29,6 +29,8 @@ struct ContentView: View {
     @State private var showingInfoView = false
     // Quit alert
     @State var showAlert = false
+    // Reset alert
+    @State var resetAlert = false
     // Spinner animation
     @State private var isAnimated = false
     // Reel animation
@@ -216,6 +218,7 @@ struct ContentView: View {
                             BetCoinView()
                         }
                         .disabled(popUp == true)
+                        
                     }
                 }
                 .scaledToFit()
@@ -305,13 +308,7 @@ struct ContentView: View {
                     // Image
                     gameLogo()
                     // Button
-                    Button(action: {
-                        showingInfoView = true
-                    }) {
-                        Text("Rewards".uppercased())
-                            .popUpMessage()
-                            .modifier(PopUpButton())
-                    }
+                    // Resume
                     Button(action: {
                         menuPop = false
                         animatingModal = false
@@ -321,6 +318,30 @@ struct ContentView: View {
                             .popUpMessage()
                             .modifier(PopUpButton())
                     }
+                    // Rewards
+                    Button(action: {
+                        showingInfoView = true
+                    }) {
+                        Text("Rewards".uppercased())
+                            .popUpMessage()
+                            .modifier(PopUpButton())
+                    }
+                    // Reset
+                    Button(action: {
+                        resetAlert = true
+                    }) {
+                        Text("Reset".uppercased())
+                            .popUpMessage()
+                            .modifier(PopUpButton())
+                    }
+                    .alert("You will lose your coins.\nThis action can't be reversed", isPresented: $resetAlert) {
+                        Button("Yes", role: .none) {
+                            menuPop = false
+                            slotBrain.restartGame()
+                        }
+                        Button("No", role: .cancel) {}
+                    }
+                    // Quit
                     Button(action: {
                         showAlert = true
                     }) {

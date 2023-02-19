@@ -146,7 +146,7 @@ struct PopUpButton: ViewModifier {
 struct PopUpView: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .frame(minWidth: 200, idealWidth: 280, maxWidth: 320, minHeight: 340, idealHeight: 440, maxHeight: 400, alignment: .center)
+            .frame(minWidth: 220, idealWidth: 300, maxWidth: 340, minHeight: 360, idealHeight: 460, maxHeight: 420, alignment: .center)
                 .background(Color("gold"))
                 .cornerRadius(20)
                 .shadow(color: Color("transparent"), radius: 6, x: 0, y: 8)

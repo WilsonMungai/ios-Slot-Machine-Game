@@ -9,23 +9,38 @@ import SwiftUI
 
 struct Menu: View {
     
-//    @Environment(\.dismiss) var dismiss
+    //    @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack {
             Form{
-                Section(header: Text("Rewards")
+                Section(header: Text("Points")
                     .font(.system(size: 20, weight: .bold, design: .rounded))) {
-                        RewardRowView(rewardImage: "banana", rewardPoints: "Banana \n +20pts")
-                        RewardRowView(rewardImage: "orange", rewardPoints: "Orange \n +25pts")
-                        RewardRowView(rewardImage: "strawberry", rewardPoints: "Strawberry \n +30pts")
-                        RewardRowView(rewardImage: "grape", rewardPoints: "Grape \n +35pts")
-                        RewardRowView(rewardImage: "cherry", rewardPoints: "Cherry \n +40pts")
-                        RewardRowView(rewardImage: "coin", rewardPoints: "Coin \n +45pts")
-                        RewardRowView(rewardImage: "bell", rewardPoints: "Bell \n +50pts")
-                        RewardRowView(rewardImage: "seven", rewardPoints: "Seven \n +60pts")
-                        RewardRowView(rewardImage: "bar", rewardPoints: "Bar \n -50pts")
+                        RewardRowView(rewardImage: "banana", rewardPoints: "Banana \n x2 +40pts")
+                        RewardRowView(rewardImage: "orange", rewardPoints: "Orange \n x2 +50pts")
+                        RewardRowView(rewardImage: "strawberry", rewardPoints: "Strawberry \n x2 +60pts")
+                        RewardRowView(rewardImage: "grape", rewardPoints: "Grape \n x2 +70pts")
+                        RewardRowView(rewardImage: "cherry", rewardPoints: "Cherry \n x2 +80pts")
+                        RewardRowView(rewardImage: "coin", rewardPoints: "Coin \n x2 +90pts")
+                        RewardRowView(rewardImage: "bell", rewardPoints: "Bell \n x2 +100pts")
+                        RewardRowView(rewardImage: "seven", rewardPoints: "Seven \n x2 +120pts")
+                        RewardRowView(rewardImage: "bar", rewardPoints: "Bar \n x2 -100pts")
+                        HStack {
+                            Image("seven")
+                                .resizable()
+                                .modifier(RewardImages())
+                            Image("seven")
+                                .resizable()
+                                .modifier(RewardImages())
+                            Image("seven")
+                                .resizable()
+                                .modifier(RewardImages())
+                            Spacer()
+                            Text ("JackPot!!!")
+                                .rewardDetails()
+                                .multilineTextAlignment(.trailing)
+                        }
                     }
             }
         }

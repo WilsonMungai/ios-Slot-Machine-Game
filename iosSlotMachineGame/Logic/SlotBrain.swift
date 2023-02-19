@@ -1,9 +1,20 @@
-//
-//  SlotBrain.swift
-//  iosSlotMachineGame
-//
-//  Created by Wilson Mungai on 2023-02-13.
-//
+/*
+ 
+ MAPD 724 Slot Machine
+ 
+ Group 10 Members
+ 
+ Nyarko, Betrand / Student Number: 301293794
+ Muguthi, Wilson Mungai / Student Number: 301287641
+ Du, Pengfei / Student Number: 301276081
+ 
+ This is a simple slot machine game that has three reel images, a spin button that changes the images in the reels. The user can see the amount of coins they have in the player coins label, and also see the jackpot amount in  the jackpot label. There are different bet amounts which the user can select. The player has the permission to reset the game which will reset everything in the game. There is also an option to quit the game.
+ 
+ Version 3
+ 
+ Last modified: 19/February/2023
+ 
+ */
 
 import Foundation
 
@@ -14,7 +25,7 @@ class SlotBrain: ObservableObject {
     // Array of reel images
     var reelImage: Array = [0,1,2]
     //  Number of coins player has
-    var playerCoins: Int = 10
+    var playerCoins: Int = 1000
     // Payer highscore
     // player high score is determined by the amount of coins they have won.
     var playerHighScore: Int = UserDefaults.standard.integer(forKey: "HighScore")
@@ -107,7 +118,7 @@ class SlotBrain: ObservableObject {
                     }
                 } else if key == 7 {
                     if value == 2 {
-                        wonBet(val: 60)
+                        wonBet(val: 100)
                         highScore()
                     } else if value == 3 {
                         jackpot()
@@ -172,7 +183,6 @@ class SlotBrain: ObservableObject {
             SoundManager.instance.playSound(sound: .highscore)
         }
         UserDefaults.standard.set(playerHighScore, forKey: "HighScore")
-//        playSound(sound: "high-score", type: "mp3")
         self.objectWillChange.send()
     }
     
@@ -189,6 +199,10 @@ class SlotBrain: ObservableObject {
         if playerCoins < 1 {
             selecteBetAmout1 = false
             popUp = true
+            // Haptics type
+            HapticManager.instance.notification(type: .warning)
+            // Haptic style
+            HapticManager.instance.impact(style: .light)
         }
         self.objectWillChange.send()
     }
@@ -206,6 +220,10 @@ class SlotBrain: ObservableObject {
         if playerCoins < 10 {
             selecteBetAmout10 = false
             popUp = true
+            // Haptics type
+            HapticManager.instance.notification(type: .warning)
+            // Haptic style
+            HapticManager.instance.impact(style: .light)
         }
         self.objectWillChange.send()
     }
@@ -223,6 +241,10 @@ class SlotBrain: ObservableObject {
         if playerCoins < 100 {
             selecteBetAmout100 = false
             popUp = true
+            // Haptics type
+            HapticManager.instance.notification(type: .warning)
+            // Haptic style
+            HapticManager.instance.impact(style: .light)
         }
         self.objectWillChange.send()
     }
@@ -266,7 +288,17 @@ class SlotBrain: ObservableObject {
     func resetGame() {
         SoundManager.instance.playSound(sound: .reset)
         UserDefaults.standard.set(0, forKey: "HighScore")
-//        playerHighScore = 0
+        playerCoins = 1000
+        selecteBetAmout1 = false
+        selecteBetAmout10 = false
+        selecteBetAmout100 = false
+        self.objectWillChange.send()
+    }
+    
+    func restartGame() {
+        SoundManager.instance.playSound(sound: .reset)
+        UserDefaults.standard.set(0, forKey: "HighScore")
+        playerHighScore = 0
         playerCoins = 1000
         selecteBetAmout1 = false
         selecteBetAmout10 = false

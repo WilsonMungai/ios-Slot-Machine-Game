@@ -36,13 +36,8 @@ struct MenuPopUp: View {
                 VStack(alignment: .center, spacing: 16) {
                     // Image
                     gameLogo()
-//                            Text("The House Always Wins!!!\n Better Luck Next Time 😉")
-//                                .popUpMessage()
-//                                .modifier(PopUpMessageModifier())
-                    // Button
                     Button(action: {
                         showingInfoView = true
-//                                animatingModal = false
                     }) {
                         Text("Rewards".uppercased())
                             .popUpMessage()
@@ -74,7 +69,7 @@ struct MenuPopUp: View {
             }
             .opacity($animatingModal.wrappedValue ? 1 : 0)
             .offset(y: $animatingModal.wrappedValue ? 0 : -100)
-            .animation(Animation.spring(response: 0.8, dampingFraction: 0.8, blendDuration: 1.0))
+//            .animation(Animation.spring(response: 0.8, dampingFraction: 0.8, blendDuration: 1.0))
             .onAppear {
                 self.animatingModal = true
             }

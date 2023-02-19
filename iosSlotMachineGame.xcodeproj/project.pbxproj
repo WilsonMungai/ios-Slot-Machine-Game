@@ -74,6 +74,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C8555C7629A27DF80027F5CF /* Haptics */ = {
+			isa = PBXGroup;
+			children = (
+				C8D273D529A037CC006F7C8B /* HapticManager.swift */,
+			);
+			path = Haptics;
+			sourceTree = "<group>";
+		};
 		C8A1FBC8299D4A3C00D9F338 /* SoundManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,13 +133,11 @@
 			isa = PBXGroup;
 			children = (
 				C8A1FBDA299DB05900D9F338 /* Logic */,
-				C8A1FBC8299D4A3C00D9F338 /* SoundManager */,
 				C8CA106F297CD04A00F2DA82 /* Managers */,
 				C8CA106D297CD01800F2DA82 /* Views */,
 				C8CA106E297CD02B00F2DA82 /* Resources */,
 				C8CA105F297CCD4100F2DA82 /* iosSlotMachineGameApp.swift */,
 				C8CA1065297CCD4300F2DA82 /* Preview Content */,
-				C8D273D529A037CC006F7C8B /* HapticManager.swift */,
 			);
 			path = iosSlotMachineGame;
 			sourceTree = "<group>";
@@ -166,6 +172,8 @@
 		C8CA106F297CD04A00F2DA82 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				C8555C7629A27DF80027F5CF /* Haptics */,
+				C8A1FBC8299D4A3C00D9F338 /* SoundManager */,
 				C8CA1071297CD06600F2DA82 /* Modifiers */,
 				C8CA1070297CD05200F2DA82 /* Extensions */,
 			);
