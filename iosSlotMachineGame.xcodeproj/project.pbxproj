@@ -14,6 +14,7 @@
 		C8A1FBD3299DA76600D9F338 /* reset.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C8A1FBD2299DA76500D9F338 /* reset.mp3 */; };
 		C8A1FBD7299DADA800D9F338 /* tada.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C8A1FBD6299DADA800D9F338 /* tada.mp3 */; };
 		C8A1FBD9299DAEC700D9F338 /* highsocre.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C8A1FBD8299DAEC700D9F338 /* highsocre.mp3 */; };
+		C8C0350A29D9F56A00ECEA26 /* three.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C8C0350929D9F56A00ECEA26 /* three.mp3 */; };
 		C8C38AF129900DE4007E7CEC /* PopUpImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C38AF029900DE4007E7CEC /* PopUpImage.swift */; };
 		C8C38AF52990242A007E7CEC /* PlaceBetImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C38AF42990242A007E7CEC /* PlaceBetImage.swift */; };
 		C8C38AFE29906D3A007E7CEC /* JackpotImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C38AFD29906D39007E7CEC /* JackpotImage.swift */; };
@@ -42,6 +43,7 @@
 		C8A1FBD2299DA76500D9F338 /* reset.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = reset.mp3; sourceTree = "<group>"; };
 		C8A1FBD6299DADA800D9F338 /* tada.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tada.mp3; sourceTree = "<group>"; };
 		C8A1FBD8299DAEC700D9F338 /* highsocre.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = highsocre.mp3; sourceTree = "<group>"; };
+		C8C0350929D9F56A00ECEA26 /* three.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = three.mp3; sourceTree = "<group>"; };
 		C8C38AF029900DE4007E7CEC /* PopUpImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpImage.swift; sourceTree = "<group>"; };
 		C8C38AF42990242A007E7CEC /* PlaceBetImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceBetImage.swift; sourceTree = "<group>"; };
 		C8C38AFD29906D39007E7CEC /* JackpotImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JackpotImage.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 		C8A1FBCB299D53D600D9F338 /* sound */ = {
 			isa = PBXGroup;
 			children = (
+				C8C0350929D9F56A00ECEA26 /* three.mp3 */,
 				C8D273E329A145F2006F7C8B /* menu.mp3 */,
 				C8D273E129A0738E006F7C8B /* gameover.mp3 */,
 				C8D273DD29A06F62006F7C8B /* spin.mp3 */,
@@ -132,8 +135,8 @@
 		C8CA105E297CCD4100F2DA82 /* iosSlotMachineGame */ = {
 			isa = PBXGroup;
 			children = (
-				C8A1FBDA299DB05900D9F338 /* Logic */,
 				C8CA106F297CD04A00F2DA82 /* Managers */,
+				C8A1FBDA299DB05900D9F338 /* Logic */,
 				C8CA106D297CD01800F2DA82 /* Views */,
 				C8CA106E297CD02B00F2DA82 /* Resources */,
 				C8CA105F297CCD4100F2DA82 /* iosSlotMachineGameApp.swift */,
@@ -277,6 +280,7 @@
 				C8A1FBD3299DA76600D9F338 /* reset.mp3 in Resources */,
 				C8CA1064297CCD4300F2DA82 /* Assets.xcassets in Resources */,
 				C8D273E229A0738E006F7C8B /* gameover.mp3 in Resources */,
+				C8C0350A29D9F56A00ECEA26 /* three.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -21,6 +21,7 @@ class SoundManager {
         case spin = "spin"
         case menu = "menu"
         case gameOver = "gameover"
+        case three = "three"
     }
     
     var player: AVAudioPlayer?

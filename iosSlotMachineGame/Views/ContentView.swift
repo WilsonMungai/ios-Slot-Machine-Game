@@ -1,20 +1,3 @@
-/*
- 
- MAPD 724 Slot Machine
- 
- Group 10 Members
- 
- Nyarko, Betrand / Student Number: 301293794
- Muguthi, Wilson Mungai / Student Number: 301287641
- Du, Pengfei / Student Number: 301276081
- 
- This is a simple slot machine game that has three reel images, a spin button that changes the images in the reels. The user can see the amount of coins they have in the player coins label, and also see the jackpot amount in  the jackpot label. There are different bet amounts which the user can select. The player has the permission to reset the game which will reset everything in the game. There is also an option to quit the game.
- 
- Version 3
- 
- Last modified: 19/February/2023
- 
- */
 
 import SwiftUI
 
@@ -31,6 +14,8 @@ struct ContentView: View {
     @State var showAlert = false
     // Reset alert
     @State var resetAlert = false
+    // Reset alert
+    @State var noCoinsAlert = false
     // Spinner animation
     @State private var isAnimated = false
     // Reel animation
@@ -42,6 +27,45 @@ struct ContentView: View {
     
     // instance of slot logic
     @ObservedObject var slotBrain = SlotBrain()
+    
+    // when the player coins reach zero
+    func gameOver() {
+        if slotBrain.playerCoins <= 0 {
+            SoundManager.instance.playSound(sound: .gameOver)
+            popUp = true
+        }
+    }
+    
+        // Player jackpot
+//        func jackpot() {
+//            if slotBrain.reelImage == [7,7,7] {
+//                // Sound
+//                SoundManager.instance.playSound(sound: .jackpot)
+//                // Haptics type
+//                HapticManager.instance.notification(type: .success)
+//                // Haptic style
+//                HapticManager.instance.impact(style: .light)
+//
+//                popUp = true
+//                slotBrain.playerCoins += slotBrain.betAmount + 1000
+//                print("!!!!!!Jackpot")
+//            }
+//        }
+    func jackpot() {
+        if slotBrain.reelImage == [7,7,7] {
+            // Sound
+            SoundManager.instance.playSound(sound: .jackpot)
+            // Haptics type
+            HapticManager.instance.notification(type: .success)
+            // Haptic style
+            HapticManager.instance.impact(style: .light)
+    
+            popUp = true
+            slotBrain.playerCoins += slotBrain.betAmount + 1000
+            slotBrain.playerHighScore = slotBrain.playerCoins
+            print("!!!!!!Jackpot")
+        }
+    }
     
     // MARK: - Body
     var body: some View {
@@ -143,8 +167,13 @@ struct ContentView: View {
                             slotBrain.checkPlayerAmount2()
                             slotBrain.checkPlayerAmount3()
                             
+                            slotBrain.threeSlots()
+                            
+                            jackpot()
+                            
                             // Game is over
-                            slotBrain.gameOver()
+//                            slotBrain.gameOver()
+                            gameOver()
                         }){
                             Image("spinner")
                                 .renderingMode(.original)
@@ -188,6 +217,9 @@ struct ContentView: View {
                     HStack {
                         Button(action: {
                             slotBrain.betAmout10()
+                            if slotBrain.playerCoins < 10 {
+                                noCoinsAlert = true
+                            }
                         }){
                             Text("10")
                                 .betAmountLabel()
@@ -202,6 +234,10 @@ struct ContentView: View {
                             BetCoinView()
                             
                         }
+                        // alert when coins are less than 10
+                        .alert("You don't have enough coins", isPresented: $noCoinsAlert) {
+                            Button("OK", role: .cancel) {}
+                        }
                         .disabled(popUp == true)
                     }
                     
@@ -209,6 +245,9 @@ struct ContentView: View {
                     HStack {
                         Button(action: {
                             slotBrain.betAmout100()
+                            if slotBrain.playerCoins < 100 {
+                                noCoinsAlert = true
+                            }
                         }){
                             Text("100")
                                 .betAmountLabel()
@@ -223,8 +262,12 @@ struct ContentView: View {
                                     .foregroundColor(Color("transparent")) )
                             BetCoinView()
                         }
+                        // alert when coins are less than 100
+                        .alert("You don't have enough coins", isPresented: $noCoinsAlert) {
+                            Button("OK", role: .cancel) {}
+                        }
+                        // disbale when there is a pop up
                         .disabled(popUp == true)
-                        
                     }
                 }
                 .scaledToFit()
@@ -392,6 +435,7 @@ struct ContentView: View {
                     VStack(alignment: .center, spacing: 16) {
                         // Image
                         PopUpImage()
+//                        JackpotImage()
                         Text("The House Always Wins!!!\n Better Luck Next Time 😉")
                             .popUpMessage()
                             .modifier(PopUpMessageModifier())

@@ -1,20 +1,3 @@
-/*
- 
- MAPD 724 Slot Machine
- 
- Group 10 Members
- 
- Nyarko, Betrand / Student Number: 301293794
- Muguthi, Wilson Mungai / Student Number: 301287641
- Du, Pengfei / Student Number: 301276081
- 
- This is a simple slot machine game that has three reel images, a spin button that changes the images in the reels. The user can see the amount of coins they have in the player coins label, and also see the jackpot amount in  the jackpot label. There are different bet amounts which the user can select. The player has the permission to reset the game which will reset everything in the game. There is also an option to quit the game.
- 
- Version 3
- 
- Last modified: 19/February/2023
- 
- */
 
 import Foundation
 import SwiftUI
@@ -25,8 +8,9 @@ class SlotBrain: ObservableObject {
     // MARK: - Variables
     // Array of reel images
     @Published var reelImage: Array = [0,1,2]
+//    @Published var reelImage: Array = [8,8,2]
     //  Number of coins player has
-    @Published var playerCoins: Int = 10
+    @Published var playerCoins: Int = 1000
     // Payer highscore
     // player high score is determined by the amount of coins they have won.
     @Published var playerHighScore: Int = UserDefaults.standard.integer(forKey: "HighScore")
@@ -119,17 +103,22 @@ class SlotBrain: ObservableObject {
                     }
                 } else if key == 7 {
                     if value == 2 {
-                        wonBet(val: 200)
+                        wonBet(val: 180)
                         highScore()
                     } else if value == 3 {
-                        jackpot()
-                        wonBet(val: 180)
+                        wonBet(val: 200)
                         highScore()
                     }
                 } else if key == 8 {
                     if value == 2 {
-                        playerCoins -= betAmount * 2
+                        // deduct double bet amount
+                        if playerCoins > 200 {
+                            playerCoins -= betAmount * 2
+                        } else {
+                            playerLoss()
+                        }
                     } else if value == 3 {
+                        // deduct 500 from bet amount
                         if playerCoins > 500 {
                             playerCoins -= 500
                         } else {
@@ -152,21 +141,6 @@ class SlotBrain: ObservableObject {
             self.objectWillChange.send()
         }
       
-    }
-    
-    // Player jackpot
-    func jackpot() {
-        // Sound
-        SoundManager.instance.playSound(sound: .jackpot)
-        // Haptics type
-        HapticManager.instance.notification(type: .success)
-        // Haptic style
-        HapticManager.instance.impact(style: .light)
-        
-        popUp = true
-        playerCoins += betAmount + 1000
-        print("!!!!!!Jackpot")
-        self.objectWillChange.send()
     }
     
     // Player loss
@@ -305,6 +279,7 @@ class SlotBrain: ObservableObject {
         self.objectWillChange.send()
     }
     
+    // restart the game
     func restartGame() {
         SoundManager.instance.playSound(sound: .reset)
         UserDefaults.standard.set(0, forKey: "HighScore")
@@ -314,5 +289,11 @@ class SlotBrain: ObservableObject {
         selecteBetAmout10 = false
         selecteBetAmout100 = false
         self.objectWillChange.send()
+    }
+    
+    func threeSlots() {
+        if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage[2] {
+            SoundManager.instance.playSound(sound: .three)
+        }
     }
 }
