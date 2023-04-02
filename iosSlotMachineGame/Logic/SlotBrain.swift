@@ -17,28 +17,29 @@
  */
 
 import Foundation
+import SwiftUI
 
 class SlotBrain: ObservableObject {
     
     let images = ["bell", "cherry", "grape", "coin", "strawberry", "orange", "banana", "seven", "bar"]
     // MARK: - Variables
     // Array of reel images
-    var reelImage: Array = [0,1,2]
+    @Published var reelImage: Array = [0,1,2]
     //  Number of coins player has
-    var playerCoins: Int = 1000
+    @Published var playerCoins: Int = 10
     // Payer highscore
     // player high score is determined by the amount of coins they have won.
-    var playerHighScore: Int = UserDefaults.standard.integer(forKey: "HighScore")
+    @Published var playerHighScore: Int = UserDefaults.standard.integer(forKey: "HighScore")
     // Player's bet amout
     // Game starts off at bet amount 0
-    var betAmount: Int = 0
+    @Published var betAmount: Int = 0
     
     // Get the selected bet amount
-    var selecteBetAmout1: Bool = false
-    var selecteBetAmout10: Bool = false
-    var selecteBetAmout100: Bool = false
+    @Published var selecteBetAmout1: Bool = false
+    @Published var selecteBetAmout10: Bool = false
+    @Published var selecteBetAmout100: Bool = false
     
-    private var popUp: Bool = false
+    @Published var popUp: Bool = false
     
     // MARK: - check player winnings
     // Spin reels and get random images according to index
@@ -118,7 +119,7 @@ class SlotBrain: ObservableObject {
                     }
                 } else if key == 7 {
                     if value == 2 {
-                        wonBet(val: 100)
+                        wonBet(val: 200)
                         highScore()
                     } else if value == 3 {
                         jackpot()
@@ -143,10 +144,14 @@ class SlotBrain: ObservableObject {
     
     // player win
     func wonBet(val: Int) {
-        // Calculate what player has won by multiplying the bet amount
-        playerCoins += betAmount + val
-        print(playerCoins)
-        self.objectWillChange.send()
+        // player wins only when one of the buttons is selected
+        if selecteBetAmout1 == true || selecteBetAmout10 == true || selecteBetAmout100 == true {
+            // Calculate what player has won by multiplying the bet amount
+            playerCoins += betAmount + val
+            print(playerCoins)
+            self.objectWillChange.send()
+        }
+      
     }
     
     // Player jackpot
@@ -178,9 +183,11 @@ class SlotBrain: ObservableObject {
     
     // player high score
     func highScore() {
-        if playerCoins > playerHighScore {
-            playerHighScore = playerCoins
-            SoundManager.instance.playSound(sound: .highscore)
+        if selecteBetAmout1 == true || selecteBetAmout10 == true || selecteBetAmout100 == true {
+            if playerCoins > playerHighScore {
+                playerHighScore = playerCoins
+                SoundManager.instance.playSound(sound: .highscore)
+            }
         }
         UserDefaults.standard.set(playerHighScore, forKey: "HighScore")
         self.objectWillChange.send()
@@ -250,7 +257,7 @@ class SlotBrain: ObservableObject {
     }
     // when the player coins reach zero
     func gameOver() {
-        if playerCoins < 0 {
+        if playerCoins <= 0 {
             SoundManager.instance.playSound(sound: .gameOver)
             popUp = true
         }
@@ -286,7 +293,10 @@ class SlotBrain: ObservableObject {
 
     // reset the game
     func resetGame() {
-        SoundManager.instance.playSound(sound: .reset)
+        // no sound when coins == 1000
+        if playerCoins != 1000 {
+            SoundManager.instance.playSound(sound: .reset)
+        }
         UserDefaults.standard.set(0, forKey: "HighScore")
         playerCoins = 1000
         selecteBetAmout1 = false

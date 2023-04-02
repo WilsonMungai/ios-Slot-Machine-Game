@@ -20,7 +20,7 @@ import SwiftUI
 
 struct ContentView: View {
     // Slot functions
-    @StateObject var slotBrain = SlotBrain()
+//    @StateObject var slotBrain = SlotBrain()
     // Pop up
     @State private var popUp = false
     // Menu pop up
@@ -39,6 +39,9 @@ struct ContentView: View {
     @State private var animatingModal = false
     // Animation duration
     let timing = 1.0
+    
+    // instance of slot logic
+    @ObservedObject var slotBrain = SlotBrain()
     
     // MARK: - Body
     var body: some View {
@@ -106,25 +109,28 @@ struct ContentView: View {
                     // MARK: - Spinner Button
                     HStack {
                         Button(action: {
+                            // Spin the reels
+                            if slotBrain.selecteBetAmout1 == false && slotBrain.selecteBetAmout10 == false && slotBrain.selecteBetAmout100 == false {
+                                // return modalToPlaceBet
+                                popUp = true
+                            } else {
+//                                slotBrain.spinReels()
+                            }
+                            
                             withAnimation(Animation.linear(duration: timing)) {
                                 // Disable animation when no button is selected
                                 if slotBrain.selecteBetAmout1 == true || slotBrain.selecteBetAmout10 == true || slotBrain.selecteBetAmout100 == true {
                                     isAnimated.toggle()
+                                    slotBrain.spinReels()
                                 }
                                 else {
+                                    
                                     isAnimated = false
                                 }
                             }
                             // Set default animation to false
                             withAnimation {
                                 self.animatingSymbol = false
-                            }
-                            // Spin the reels
-                            if slotBrain.selecteBetAmout1 == false && slotBrain.selecteBetAmout10 == false && slotBrain.selecteBetAmout100 == false {
-                                // return modalToPlaceBet
-                                popUp = true
-                            } else {
-                                slotBrain.spinReels()
                             }
                             // trigger animation after changing symbols
                             withAnimation {
@@ -148,7 +154,7 @@ struct ContentView: View {
                         }
                         // disable button when pop up appears
                         .disabled(popUp == true)
-//                        .disabled(isAnimated == true)
+
                     }
                 }
                 .layoutPriority(2)
