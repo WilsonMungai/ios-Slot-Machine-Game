@@ -2,8 +2,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    // Slot functions
-//    @StateObject var slotBrain = SlotBrain()
     // Pop up
     @State private var popUp = false
     // Menu pop up
@@ -37,20 +35,6 @@ struct ContentView: View {
     }
     
         // Player jackpot
-//        func jackpot() {
-//            if slotBrain.reelImage == [7,7,7] {
-//                // Sound
-//                SoundManager.instance.playSound(sound: .jackpot)
-//                // Haptics type
-//                HapticManager.instance.notification(type: .success)
-//                // Haptic style
-//                HapticManager.instance.impact(style: .light)
-//
-//                popUp = true
-//                slotBrain.playerCoins += slotBrain.betAmount + 1000
-//                print("!!!!!!Jackpot")
-//            }
-//        }
     func jackpot() {
         if slotBrain.reelImage == [7,7,7] {
             // Sound
@@ -167,12 +151,13 @@ struct ContentView: View {
                             slotBrain.checkPlayerAmount2()
                             slotBrain.checkPlayerAmount3()
                             
+                            // three similar slots
                             slotBrain.threeSlots()
                             
+                            // jackpot
                             jackpot()
                             
                             // Game is over
-//                            slotBrain.gameOver()
                             gameOver()
                         }){
                             Image("spinner")
@@ -383,7 +368,7 @@ struct ContentView: View {
                             .popUpMessage()
                             .modifier(PopUpButton())
                     }
-                    .alert("You will lose your coins.\nThis action can't be reversed", isPresented: $resetAlert) {
+                    .alert("You will lose your coins.\nThis action can't be reversed!", isPresented: $resetAlert) {
                         Button("Yes", role: .none) {
                             menuPop = false
                             slotBrain.restartGame()

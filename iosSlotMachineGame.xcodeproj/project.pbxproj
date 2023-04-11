@@ -84,6 +84,14 @@
 			path = Haptics;
 			sourceTree = "<group>";
 		};
+		C878341729E593D600686816 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C8CA105F297CCD4100F2DA82 /* iosSlotMachineGameApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		C8A1FBC8299D4A3C00D9F338 /* SoundManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,11 +143,11 @@
 		C8CA105E297CCD4100F2DA82 /* iosSlotMachineGame */ = {
 			isa = PBXGroup;
 			children = (
+				C878341729E593D600686816 /* App */,
 				C8CA106F297CD04A00F2DA82 /* Managers */,
 				C8A1FBDA299DB05900D9F338 /* Logic */,
 				C8CA106D297CD01800F2DA82 /* Views */,
 				C8CA106E297CD02B00F2DA82 /* Resources */,
-				C8CA105F297CCD4100F2DA82 /* iosSlotMachineGameApp.swift */,
 				C8CA1065297CCD4300F2DA82 /* Preview Content */,
 			);
 			path = iosSlotMachineGame;

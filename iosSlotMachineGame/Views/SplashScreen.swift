@@ -14,11 +14,6 @@ struct SplashScreen: View {
     
     var body: some View {
         ZStack {
-//            // Background Gradient
-//            LinearGradient(colors: [Color("black"), Color("gold")], startPoint: .top,
-//                           endPoint: .bottom)
-//            // Extend gradient outside the safe area
-//            .edgesIgnoringSafeArea(.all)
             if isActive {
                 ContentView()
             } else {

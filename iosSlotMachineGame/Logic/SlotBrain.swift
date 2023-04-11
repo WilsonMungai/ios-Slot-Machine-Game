@@ -8,13 +8,12 @@ class SlotBrain: ObservableObject {
     // MARK: - Variables
     // Array of reel images
     @Published var reelImage: Array = [0,1,2]
-//    @Published var reelImage: Array = [8,8,2]
     //  Number of coins player has
     @Published var playerCoins: Int = 1000
     // Payer highscore
     // player high score is determined by the amount of coins they have won.
     @Published var playerHighScore: Int = UserDefaults.standard.integer(forKey: "HighScore")
-    // Player's bet amout
+    // Player's bet amount
     // Game starts off at bet amount 0
     @Published var betAmount: Int = 0
     
@@ -229,14 +228,6 @@ class SlotBrain: ObservableObject {
         }
         self.objectWillChange.send()
     }
-    // when the player coins reach zero
-    func gameOver() {
-        if playerCoins <= 0 {
-            SoundManager.instance.playSound(sound: .gameOver)
-            popUp = true
-        }
-        self.objectWillChange.send()
-    }
     
     func checkPlayerAmount() {
         if playerCoins < 100 {
@@ -291,6 +282,7 @@ class SlotBrain: ObservableObject {
         self.objectWillChange.send()
     }
     
+    // similar similar slots
     func threeSlots() {
         if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage[2] {
             SoundManager.instance.playSound(sound: .three)

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct Menu: View {
     
-    //    @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
