@@ -22,34 +22,9 @@ struct ContentView: View {
     @State private var animatingModal = false
     // Animation duration
     let timing = 1.0
-    
     // instance of slot logic
-    @ObservedObject var slotBrain = SlotBrain()
+    @StateObject var slotBrain = SlotBrain()
     
-    // when the player coins reach zero
-    func gameOver() {
-        if slotBrain.playerCoins <= 0 {
-            SoundManager.instance.playSound(sound: .gameOver)
-            popUp = true
-        }
-    }
-    
-        // Player jackpot
-    func jackpot() {
-        if slotBrain.reelImage == [7,7,7] {
-            // Sound
-            SoundManager.instance.playSound(sound: .jackpot)
-            // Haptics type
-            HapticManager.instance.notification(type: .success)
-            // Haptic style
-            HapticManager.instance.impact(style: .light)
-    
-            popUp = true
-            slotBrain.playerCoins += slotBrain.betAmount + 1000
-            slotBrain.playerHighScore = slotBrain.playerCoins
-            print("!!!!!!Jackpot")
-        }
-    }
     
     // MARK: - Body
     var body: some View {
@@ -61,10 +36,13 @@ struct ContentView: View {
             .edgesIgnoringSafeArea(.all)
             
             VStack(alignment: .center, spacing: 5) {
+                
                 // MARK: - Game logo
                 gameLogo()
+                
                 // Labels views
                 labelsContentLayer
+                
                 // MARK: - Slot Machine
                 VStack() {
                     // MARK: - Reel 1
@@ -81,6 +59,7 @@ struct ContentView: View {
                                 self.animatingSymbol.toggle()
                             })
                     }
+                    
                     HStack() {
                         // MARK: - Reel 2
                         ZStack {
@@ -96,6 +75,7 @@ struct ContentView: View {
                                     self.animatingSymbol.toggle()
                                 })
                         }
+                        
                         // MARK: - Reel 3
                         ZStack {
                             ReelView()
@@ -116,37 +96,35 @@ struct ContentView: View {
                     
                     // MARK: - Spinner Button
                     HStack {
+                        
                         Button(action: {
+                            // trigger animation after changing symbols
+                            withAnimation {
+                                self.animatingSymbol = true
+                            }
+                            
                             // Spin the reels
                             if slotBrain.selecteBetAmout1 == false && slotBrain.selecteBetAmout10 == false && slotBrain.selecteBetAmout100 == false {
                                 // return modalToPlaceBet
                                 popUp = true
-                            } else {
-//                                slotBrain.spinReels()
                             }
                             
+                            // button animation
                             withAnimation(Animation.linear(duration: timing)) {
-                                // Disable animation when no button is selected
+                                // check 1 button is selected
                                 if slotBrain.selecteBetAmout1 == true || slotBrain.selecteBetAmout10 == true || slotBrain.selecteBetAmout100 == true {
                                     isAnimated.toggle()
                                     slotBrain.spinReels()
                                 }
                                 else {
-                                    
+                                    // disable animation when animation is false
                                     isAnimated = false
                                 }
                             }
-                            // Set default animation to false
-                            withAnimation {
-                                self.animatingSymbol = false
-                            }
-                            // trigger animation after changing symbols
-                            withAnimation {
-                                self.animatingSymbol = true
-                            }
+                            
                             // Update when player wins
                             slotBrain.playerWinning()
-                        
+                            
                             slotBrain.checkPlayerAmount()
                             slotBrain.checkPlayerAmount2()
                             slotBrain.checkPlayerAmount3()
@@ -168,7 +146,6 @@ struct ContentView: View {
                         }
                         // disable button when pop up appears
                         .disabled(popUp == true)
-
                     }
                 }
                 .layoutPriority(2)
@@ -188,6 +165,7 @@ struct ContentView: View {
                                 .padding(.leading,2)
                             // Change button foreground color if it is selected or not
                                 .foregroundColor(slotBrain.selecteBetAmout1 ? Color.white : Color.black)
+                                .animation(.default, value: 1)
                                 .background( slotBrain.selecteBetAmout1 ? Capsule()
                                     .strokeBorder(lineWidth: 2)
                                     .foregroundColor(Color("gold")) : Capsule()
@@ -211,11 +189,13 @@ struct ContentView: View {
                                 .modifier(BetAmountShadow())
                             // Change button foreground color if it is selected or not
                                 .foregroundColor(slotBrain.selecteBetAmout10 ? Color.white : Color.black)
+                                .animation(.default, value: 1)
                                 .background( slotBrain.selecteBetAmout10 ? Capsule()
                                     .strokeBorder(lineWidth: 2)
                                     .foregroundColor(Color("gold")): Capsule()
                                     .strokeBorder(lineWidth: 0)
                                     .foregroundColor(Color("transparent")))
+                            
                             BetCoinView()
                             
                         }
@@ -240,6 +220,7 @@ struct ContentView: View {
                                 .padding(.trailing, 2)
                             // Change button foreground color if it is selected or not
                                 .foregroundColor(slotBrain.selecteBetAmout100 ? Color.white : Color.black)
+                                .animation(.default, value: 1)
                                 .background( slotBrain.selecteBetAmout100 ? Capsule()
                                     .strokeBorder(lineWidth: 2)
                                     .foregroundColor(Color("gold")) : Capsule()
@@ -299,8 +280,7 @@ struct ContentView: View {
         }
     }
     
-    // MARK: - Views
-    // Coins & HighScore labels
+    // MARK: - Coins & HighScore labels
     var labelsContentLayer: some View {
         HStack {
             // MARK: - Score Label
@@ -326,7 +306,7 @@ struct ContentView: View {
         }
     }
     
-    // Menu Pop up view
+    // MARK: - Menu Pop up view
     var menuPopUp: some View {
         ZStack {
             Color("transparent")
@@ -402,7 +382,7 @@ struct ContentView: View {
         }
     }
     
-    // In game pop ups
+    // MARK: - In game pop ups
     var gamePopUps: some View {
         ZStack {
             Color("transparent")
@@ -420,7 +400,6 @@ struct ContentView: View {
                     VStack(alignment: .center, spacing: 16) {
                         // Image
                         PopUpImage()
-//                        JackpotImage()
                         Text("The House Always Wins!!!\n Better Luck Next Time 😉")
                             .popUpMessage()
                             .modifier(PopUpMessageModifier())
@@ -499,6 +478,32 @@ struct ContentView: View {
             }
         }
     }
+    
+    // MARK: - game over method
+    // when the player coins reach zero
+    func gameOver() {
+        if slotBrain.playerCoins <= 0 {
+            SoundManager.instance.playSound(sound: .gameOver)
+            popUp = true
+        }
+    }
+    
+    // MARK: - jackpot method
+    func jackpot() {
+        if slotBrain.reelImage == [7,7,7] {
+            // Sound
+            SoundManager.instance.playSound(sound: .jackpot)
+            // Haptics type
+            HapticManager.instance.notification(type: .success)
+            // Haptic style
+            HapticManager.instance.impact(style: .light)
+            
+            popUp = true
+            slotBrain.playerCoins += slotBrain.betAmount + 1000
+            slotBrain.playerHighScore = slotBrain.playerCoins
+        }
+    }
+    
     // MARK: - Preview
     struct ContentView_Previews: PreviewProvider {
         static let slotBrain = SlotBrain()

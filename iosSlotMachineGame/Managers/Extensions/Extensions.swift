@@ -32,7 +32,6 @@ extension Text {
     func rewardDetails() -> Text {
         self.font(.system(size: 20, weight: .bold, design: .rounded))
             .foregroundColor(Color(.systemGray2))
-//            .foregroundColor(Color("gold"))
             .fontWeight(.bold)
             
     }

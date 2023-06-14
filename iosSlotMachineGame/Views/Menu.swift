@@ -45,7 +45,7 @@ struct Menu: View {
         }
         .overlay (
             Button(action: {
-                //
+                // dismisss view
                 self.presentationMode.wrappedValue.dismiss()
             }) {
                 Image(systemName: "xmark.circle")

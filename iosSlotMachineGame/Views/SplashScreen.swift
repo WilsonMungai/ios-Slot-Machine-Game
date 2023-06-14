@@ -18,8 +18,7 @@ struct SplashScreen: View {
                 ContentView()
             } else {
                 VStack {
-                      
-                        Image("casino-logo")
+                    Image("casino-logo")
                         .resizable()
                         .scaledToFit()
                         .layoutPriority(1)

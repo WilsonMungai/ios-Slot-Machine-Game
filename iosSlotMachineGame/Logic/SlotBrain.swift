@@ -38,10 +38,10 @@ class SlotBrain: ObservableObject {
         for image in reelImage {
             counts[image] = (counts[image] ?? 0) + 1
         }
-        print(counts)
-        
+        // if all reals don't match then player loses
         if reelImage[0] != reelImage[1] && reelImage[1] != reelImage[2] && reelImage[0] != reelImage[2] {
             playerLoss()
+            // else check real values and award player accordingly
         } else {
             for (key, value) in counts {
                 if key == 0 {
@@ -136,7 +136,6 @@ class SlotBrain: ObservableObject {
         if selecteBetAmout1 == true || selecteBetAmout10 == true || selecteBetAmout100 == true {
             // Calculate what player has won by multiplying the bet amount
             playerCoins += betAmount + val
-            print(playerCoins)
             self.objectWillChange.send()
         }
       
@@ -150,7 +149,6 @@ class SlotBrain: ObservableObject {
         } else {
             playerCoins -= betAmount
         }
-        print(playerCoins)
         self.objectWillChange.send()
     }
     
@@ -286,6 +284,13 @@ class SlotBrain: ObservableObject {
     func threeSlots() {
         if reelImage[0] == reelImage[1] && reelImage[1] == reelImage[2] && reelImage[0] == reelImage[2] {
             SoundManager.instance.playSound(sound: .three)
+        }
+    }
+    
+    func gameOver(popup: Bool) {
+        if playerCoins <= 0 {
+            SoundManager.instance.playSound(sound: .gameOver)
+            popUp = true
         }
     }
 }

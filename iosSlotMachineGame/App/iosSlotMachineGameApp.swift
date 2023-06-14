@@ -11,7 +11,6 @@ import SwiftUI
 struct iosSlotMachineGameApp: App {
     var body: some Scene {
         WindowGroup {
-//            ContentView()
             SplashScreen()
         }
     }
